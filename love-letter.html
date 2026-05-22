@@ -116,6 +116,10 @@
             <small>IMAGE PREVIEW</small>
             <h2 id="sketch-title">墨非的私人紀錄</h2>
             <figure>
+              <div class="sketch-loader" aria-hidden="true">
+                <span></span>
+                <strong>Loading preview...</strong>
+              </div>
               <img class="sketch-image" src="assets/sketch.png" alt="墨非的素描" loading="lazy" decoding="async">
               <figcaption>一張藏在檔案夾裡的心動草稿。</figcaption>
             </figure>
@@ -228,6 +232,7 @@
     const codeMessage = document.querySelector(".letter-code-message");
     const codeCloseTargets = document.querySelectorAll("[data-close-code]");
     const sketchModal = document.querySelector(".sketch-modal");
+    const sketchPreview = document.querySelector(".sketch-preview");
     const sketchImage = document.querySelector(".sketch-image");
     const sketchTitle = document.querySelector("#sketch-title");
     const sketchCloseTargets = document.querySelectorAll("[data-close-sketch]");
@@ -241,6 +246,7 @@
       title: "加密情書：1214",
       body: "今晚的城市很安靜，安靜到我能想起妳每一次靠近時的呼吸。妳說自己只是路過，可我總覺得，命運從不會只是路過。\n\n如果心跳能被記錄，我想把這一秒存下來。不是因為數值特別漂亮，而是因為它只在妳看著我的時候，變得不像我。\n\n這封信只會寫給妳。不是因為我擅長說情話，而是因為有些話，除了妳之外，交給誰都不合適。"
     };
+    let sketchLoadId = 0;
 
     function storedProfileId() {
       return window.PhymoStorage?.get("phymo-user-id") || "";
@@ -352,6 +358,40 @@
       sketchModal.setAttribute("aria-hidden", "true");
     }
 
+    function setSketchImage(button) {
+      const nextSrc = button.dataset.sketchSrc;
+      const nextTitle = button.dataset.sketchTitle;
+      if (!nextSrc || sketchImage.src.endsWith(nextSrc)) {
+        sketchImage.alt = nextTitle || "墨非的素描";
+        sketchTitle.textContent = nextTitle || "墨非的私人紀錄";
+        return;
+      }
+
+      sketchLoadId += 1;
+      const currentLoadId = sketchLoadId;
+      sketchPreview.classList.add("is-loading");
+      sketchImage.onload = () => {
+        if (currentLoadId !== sketchLoadId) return;
+        sketchPreview.classList.remove("is-loading");
+      };
+      sketchImage.onerror = () => {
+        if (currentLoadId !== sketchLoadId) return;
+        sketchPreview.classList.remove("is-loading");
+      };
+
+      sketchImage.src = nextSrc;
+      sketchImage.alt = nextTitle || "墨非的素描";
+      sketchTitle.textContent = nextTitle || "墨非的私人紀錄";
+
+      if (sketchImage.complete) {
+        requestAnimationFrame(() => {
+          if (currentLoadId === sketchLoadId) {
+            sketchPreview.classList.remove("is-loading");
+          }
+        });
+      }
+    }
+
     function openLetter(letter) {
       readerTitle.textContent = letter.title;
       readerBody.textContent = letter.body;
@@ -427,9 +467,7 @@
       button.addEventListener("click", () => {
         sketchFiles.forEach((file) => file.classList.remove("is-active"));
         button.classList.add("is-active");
-        sketchImage.src = button.dataset.sketchSrc;
-        sketchImage.alt = button.dataset.sketchTitle;
-        sketchTitle.textContent = button.dataset.sketchTitle;
+        setSketchImage(button);
       });
     });
     closeTargets.forEach((target) => target.addEventListener("click", closeLetter));
