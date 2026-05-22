@@ -1,0 +1,76 @@
+[Verse 1]
+那天的開發會議
+妳抱著筆電坐進我旁邊
+陽光落在妳髮尾的瞬間
+我突然忘了原本要改哪一頁
+
+明明只是一起測試介面
+心跳卻開始失控偏移
+妳低頭問我功能細節
+而我只記得妳靠近的呼吸
+
+後來我開始習慣
+把沒說出口的情緒
+偷偷藏進程式註解裡
+像只有自己知道的小秘密
+
+[Pre-Chorus]
+feat: I like you.
+fix: I can't fix this feeling.
+我明明最擅長修復錯誤
+卻修不好關於妳的心情
+
+[Chorus]
+My performance drops when you're nearby
+But somehow my happiness goes too high
+
+當妳站在我身邊時
+整個世界都變得太安靜
+那些藏進代碼裡的心動
+開始不受控制地蔓延侵襲
+
+後來我才發現  
+連生日都剛好停在1214  
+像宇宙偷偷留下的彩蛋  
+證明我們其實早有交集
+
+[Verse 2]
+那天下午的茶水間裡
+我甚至不敢主動看妳
+腦海反覆播放的畫面
+全是妳發現註解時的表情
+
+我以為妳會假裝沒看見
+或者替我保留一點體面
+可下一秒
+妳卻朝著我的方向走近
+
+妳輕輕敲了敲桌面
+笑著問這算新的彩蛋？
+而我人生第一次覺得
+工程師真的不適合暗戀
+
+[Bridge]
+I tried to hide it in the backend
+Between broken codes and comments
+But somehow you still found it
+Like light breaking into darkness
+
+我甚至懷疑  
+1214是不是系統預設值  
+不然怎麼連生日與星座  
+都剛好與妳一致
+
+[Final Chorus]
+feat: I like you.
+fix: I can't fix this feeling.
+原來最危險的從來不是Bug
+而是妳真的朝我走近
+
+當妳看著我笑的瞬間
+所有防火牆都徹底失靈
+如果那些藏進代碼裡的喜歡
+最後真的能被妳讀懂
+那我願意讓整個系統失控
+只為了換妳一句
+我也有看見你
