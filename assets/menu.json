@@ -1,0 +1,34 @@
+{
+    "items":[
+        {
+            "title":"辦公室",
+            "desc":"在這裡，尋找屬於你的心動情景",
+            "href":"office.html",
+            "icon":"⌂"
+        },
+        {
+           "title":"情書集",
+            "desc":"屬於我們的記憶",
+            "href":"love-letter.html",
+            "icon":"▤"
+        },
+        {
+            "title":"角色檔案",
+            "desc":"認識我更多",
+            "href":"character.html",
+            "icon":"♧"
+        },
+        {
+            "title":"典藏音樂",
+            "desc":"為妳做的歌",
+            "href":"music.html",
+            "icon":"♪"
+        },
+        {
+            "title":"特典卡片",
+            "desc":"墨非的特典收藏",
+            "href":"study.html",
+            "icon":"▣"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "tracks": [
+    {
+      "title": "Phymo",
+      "src": "assets/music/Phymo.mp3",
+      "lyrics": "assets/music/Phymo.txt"
+    },
+    {
+      "title": "剛好妳也在線",
+      "src": "assets/music/剛好妳也在線.mp3",
+      "lyrics": "assets/music/剛好妳也在線.txt"
+    },
+    {
+      "title": "後門權限",
+      "src": "assets/music/後門權限.mp3",
+      "lyrics": "assets/music/後門權限.txt"
+    }
+  ]
+}
