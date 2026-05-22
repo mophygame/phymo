@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Phymo心跳實驗</title>
   <link rel="preload" as="image" href="assets/page-character.webp">
+  <link rel="preload" as="image" href="assets/character-mophy.png">
+  <link rel="preload" as="image" href="assets/character/mophy-normal.png">
   <link rel="stylesheet" href="app.css">
   <script src="storage.js"></script>
   <script src="auth-guard.js"></script>
@@ -18,7 +20,7 @@
       <div class="office-light"></div>
     </div>
     <div class="office-logo" aria-label="Phymo 心跳實驗">
-      <img src="assets/logo-text.png" alt="Phymo 心跳實驗">
+      <img src="assets/logo-text.png" alt="Phymo 心跳實驗" decoding="async">
     </div>
 
     <nav class="office-menu" aria-label="辦公室選單"></nav>
@@ -30,7 +32,7 @@
 
     <section class="character-stage" aria-label="墨非角色互動">
       <button class="character-portrait-button" type="button" aria-label="和墨非對話">
-        <img class="character-portrait" src="assets/character-mophy.png" alt="墨非">
+        <img class="character-portrait" src="assets/character-mophy.png" alt="墨非" decoding="async">
       </button>
 
       <section class="character-dialog" aria-live="polite">
@@ -43,19 +45,19 @@
       </section>
 
       <nav class="character-emotions" aria-label="情緒選擇">
-        <button type="button" data-emotion="normal" class="is-active"><img src="assets/icons/icon-normal.png" alt="">日常</button>
-        <button type="button" data-emotion="smile"><img src="assets/icons/icon-smile.png" alt="">溫柔</button>
-        <button type="button" data-emotion="tease"><img src="assets/icons/icon-tease.png" alt="">逗弄</button>
-        <button type="button" data-emotion="shy"><img src="assets/icons/icon-shy.png" alt="">害羞</button>
-        <button type="button" data-emotion="serious"><img src="assets/icons/icon-serious.png" alt="">認真</button>
-        <button type="button" data-emotion="jealous"><img src="assets/icons/icon-jealous.png" alt="">吃醋</button>
-        <button type="button" data-emotion="comfort"><img src="assets/icons/icon-comfort.png" alt="">安慰</button>
-        <button type="button" data-emotion="heartbeat"><img src="assets/icons/icon-heartbeat.png" alt="">心動</button>
+        <button type="button" data-emotion="normal" class="is-active"><img src="assets/icons/icon-normal.png" alt="" loading="lazy" decoding="async">日常</button>
+        <button type="button" data-emotion="smile"><img src="assets/icons/icon-smile.png" alt="" loading="lazy" decoding="async">溫柔</button>
+        <button type="button" data-emotion="tease"><img src="assets/icons/icon-tease.png" alt="" loading="lazy" decoding="async">逗弄</button>
+        <button type="button" data-emotion="shy"><img src="assets/icons/icon-shy.png" alt="" loading="lazy" decoding="async">害羞</button>
+        <button type="button" data-emotion="serious"><img src="assets/icons/icon-serious.png" alt="" loading="lazy" decoding="async">認真</button>
+        <button type="button" data-emotion="jealous"><img src="assets/icons/icon-jealous.png" alt="" loading="lazy" decoding="async">吃醋</button>
+        <button type="button" data-emotion="comfort"><img src="assets/icons/icon-comfort.png" alt="" loading="lazy" decoding="async">安慰</button>
+        <button type="button" data-emotion="heartbeat"><img src="assets/icons/icon-heartbeat.png" alt="" loading="lazy" decoding="async">心動</button>
       </nav>
     </section>
 
     <a class="office-profile" href="office.html" aria-label="角色資料">
-      <img src="assets/card-3.jpeg" alt="">
+      <img src="assets/card-3.jpeg" alt="" decoding="async">
       <span>
         <strong>墨非</strong>
         <small>Lv.99</small>
@@ -64,7 +66,7 @@
     </a>
 
     <a class="office-next" href="love-letter.html" aria-label="前往情書集">
-      <img src="assets/logo-go-letter.png" alt="前往情書集">
+      <img src="assets/logo-go-letter.png" alt="前往情書集" decoding="async">
     </a>
   </main>
   <script src="menu.js"></script>
@@ -137,6 +139,7 @@
     const emotionImages = Object.fromEntries(
       emotions.map((emotion) => [emotion, `assets/character/mophy-${emotion}.png`])
     );
+    const preloadedEmotionImages = new Map();
     const fallbackDialog = {
       normal: ["妳來了，我剛好在等妳。", "今天的時間，我可以全部留給妳。"],
       smile: ["妳這樣笑，真的很犯規。", "看到妳笑，我好像就沒辦法冷靜了。"],
@@ -151,8 +154,36 @@
     let currentEmotion = "normal";
     let lastLine = "";
 
+    function preloadEmotionImages() {
+      emotions.forEach((emotion) => {
+        const src = emotionImages[emotion];
+        if (preloadedEmotionImages.has(src)) return;
+
+        const image = new Image();
+        image.decoding = "async";
+        image.src = src;
+        preloadedEmotionImages.set(src, image);
+      });
+    }
+
+    function scheduleEmotionPreload() {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(preloadEmotionImages, { timeout: 1800 });
+        return;
+      }
+
+      window.setTimeout(preloadEmotionImages, 600);
+    }
+
+    function getDialogLines(emotion) {
+      const jsonLines = Array.isArray(dialogData[emotion]) ? dialogData[emotion].filter(Boolean) : [];
+      if (jsonLines.length) return jsonLines;
+
+      return Array.isArray(fallbackDialog[emotion]) ? fallbackDialog[emotion] : [];
+    }
+
     function pickLine(emotion) {
-      const lines = Array.isArray(dialogData[emotion]) ? dialogData[emotion] : [];
+      const lines = getDialogLines(emotion);
       if (!lines.length) return "今天想聽我說什麼？";
       if (lines.length === 1) return lines[0];
 
@@ -184,9 +215,10 @@
     async function loadDialog() {
       try {
         const response = await fetch("assets/dialog.json", { cache: "no-store" });
-        dialogData = response.ok ? await response.json() : fallbackDialog;
+        const data = response.ok ? await response.json() : {};
+        dialogData = data && typeof data === "object" ? data : {};
       } catch (error) {
-        dialogData = fallbackDialog;
+        dialogData = {};
       }
 
       setEmotion("normal");
@@ -203,6 +235,7 @@
     });
 
     loadDialog();
+    scheduleEmotionPreload();
 
     initPhymoMenu({
       menuSelector: ".office-menu",

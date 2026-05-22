@@ -18,7 +18,7 @@
       <div class="office-light"></div>
     </div>
     <div class="office-logo" aria-label="Phymo 心跳實驗">
-      <img src="assets/logo-text.png" alt="Phymo 心跳實驗">
+      <img src="assets/logo-text.png" alt="Phymo 心跳實驗" decoding="async">
     </div>
 
     <nav class="office-menu" aria-label="辦公室選單"></nav>
@@ -29,7 +29,7 @@
     </section>
 
     <a class="office-profile" href="office.html" aria-label="角色資料">
-      <img src="assets/card-3.jpeg" alt="">
+      <img src="assets/card-3.jpeg" alt="" decoding="async">
       <span>
         <strong>墨非</strong>
         <small>Lv.99</small>
@@ -38,7 +38,7 @@
     </a>
 
     <a class="office-next" href="love-letter.html" aria-label="前往情書集">
-      <img src="assets/logo-go-letter.png" alt="前往情書集">
+      <img src="assets/logo-go-letter.png" alt="前往情書集" decoding="async">
     </a>
     <button class="collection-trigger" type="button" aria-label="打開典藏盒"></button>
 
@@ -58,7 +58,7 @@
         <button class="collection-preview-backdrop" type="button" data-close-preview aria-label="關閉照片預覽"></button>
         <figure class="collection-preview-frame" role="dialog" aria-modal="true" aria-label="典藏照片預覽">
           <button class="collection-preview-close" type="button" data-close-preview aria-label="關閉照片預覽">×</button>
-          <img class="collection-preview-image" src="" alt="">
+          <img class="collection-preview-image" src="" alt="" decoding="async">
           <figcaption class="collection-preview-caption"></figcaption>
           <a class="collection-preview-download" href="#" download>下載此照片</a>
         </figure>
@@ -222,6 +222,7 @@
         image.src = src;
         image.alt = `典藏照片 ${index + 1}`;
         image.loading = "lazy";
+        image.decoding = "async";
         button.append(image);
 
         const caption = document.createElement("figcaption");
