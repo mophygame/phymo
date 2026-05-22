@@ -50,7 +50,7 @@ table {
 
 * {
   box-sizing: border-box;
-  --art: url("assets/page-login.png");
+  --art: url("assets/page-login.webp");
 }
 
 html,
@@ -67,7 +67,7 @@ body {
   color: #fff;
   font-family: "Noto Serif TC", "Songti TC", "PingFang TC", "Microsoft JhengHei", serif;
   background: #f7f7fb;
-  background-image: linear-gradient(rgb(195 186 214) 19%, rgb(172 168 214) 43%, rgb(129 125 182)), url(assets/page-login.png);
+  background-image: linear-gradient(rgb(195 186 214) 19%, rgb(172 168 214) 43%, rgb(129 125 182)), url("assets/page-login.webp");
 }
 
 .screen {
@@ -472,7 +472,7 @@ body {
 
 .office-screen {
   --ratio: 954 / 644;
-  --art: url("assets/page-office.png");
+  --art: url("assets/page-office.webp");
 }
 
 .parallax-office {
@@ -524,7 +524,7 @@ body {
   inset: -5% -16%;
   background:
     linear-gradient(90deg, rgba(18, 16, 48, .42), rgba(18, 16, 48, .03) 24%, rgba(40, 33, 88, .18)),
-    url("assets/page-office.png") center / cover no-repeat;
+    url("assets/page-office.webp") center / cover no-repeat;
   filter: saturate(1.08) contrast(1.03);
   transform:
     translate3d(var(--scene-shift-x), var(--scene-shift-y), 0)
@@ -542,12 +542,12 @@ body {
 .study-screen .office-panorama {
   background:
     linear-gradient(90deg, rgba(18, 16, 48, .42), rgba(18, 16, 48, .03) 24%, rgba(40, 33, 88, .18)),
-    url("assets/page-study.png") center / cover no-repeat;
+    url("assets/page-study.webp") center / cover no-repeat;
 }
 
 .study-screen .office-panorama::after {
   opacity: 0;
-  background: url("assets/page-study-hover.png") center / cover no-repeat;
+  background: url("assets/page-study-hover.webp") center / cover no-repeat;
   filter: drop-shadow(0 0 18px rgba(230, 220, 255, .5));
   mix-blend-mode: screen;
   transition: opacity .28s ease;
@@ -560,18 +560,18 @@ body {
 .love-letter-screen .office-panorama {
   background:
     linear-gradient(90deg, rgba(18, 16, 48, .42), rgba(18, 16, 48, .03) 24%, rgba(40, 33, 88, .18)),
-    url("assets/page-love-letter.png") center / contain no-repeat;
+    url("assets/page-love-letter.webp") center / contain no-repeat;
 }
 
 .love-letter-screen.lamp-lit .office-panorama {
   background:
     linear-gradient(90deg, rgba(18, 16, 48, .22), rgba(18, 16, 48, .02) 24%, rgba(40, 33, 88, .12)),
-    url("assets/page-love-letter-light.png") center / contain no-repeat;
+    url("assets/page-love-letter-light.webp") center / contain no-repeat;
 }
 
 .love-letter-screen .office-panorama::after {
   opacity: 0;
-  background: url("assets/page-love-letter-hover.png") center / contain no-repeat;
+  background: url("assets/page-love-letter-hover.webp") center / contain no-repeat;
   filter: drop-shadow(0 0 18px rgba(230, 220, 255, .5));
   mix-blend-mode: screen;
   transition: opacity .28s ease;
@@ -604,12 +604,12 @@ body {
 .music-screen .office-panorama {
   background:
     linear-gradient(90deg, rgba(18, 16, 48, .42), rgba(18, 16, 48, .03) 24%, rgba(40, 33, 88, .18)),
-    url("assets/page-music.png") center / cover no-repeat;
+    url("assets/page-music.webp") center / cover no-repeat;
 }
 
 .music-screen .office-panorama::after {
   opacity: 0;
-  background: url("assets/page-music-hover.png") center / cover no-repeat;
+  background: url("assets/page-music-hover.webp") center / cover no-repeat;
   filter: drop-shadow(0 0 18px rgba(230, 220, 255, .5));
   mix-blend-mode: screen;
   transition: opacity .28s ease;
@@ -623,7 +623,7 @@ body {
 .character-screen .office-panorama {
   background:
     linear-gradient(90deg, rgba(18, 16, 48, .42), rgba(18, 16, 48, .03) 24%, rgba(40, 33, 88, .18)),
-    url("assets/page-character.png") center / cover no-repeat;
+    url("assets/page-character.webp") center / cover no-repeat;
 }
 
 /* .character-screen .office-panorama::after {
