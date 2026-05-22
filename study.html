@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phymo心跳實驗</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="storage.js"></script>
+  <script src="auth-guard.js"></script>
+</head>
+<body>
+<!-- 這段註解不會被編譯，但我希望有一天妳會看見。 -->
+<!-- init_love() failed: courage not found. -->
+  <main class="screen office-screen parallax-office study-screen" aria-label="墨非書房頁">
+    <div class="office-parallax-stage" aria-hidden="true">
+      <div class="office-panorama"></div>
+      <div class="office-light"></div>
+    </div>
+    <div class="office-logo" aria-label="Phymo 心跳實驗">
+      <img src="assets/logo-text.png" alt="Phymo 心跳實驗">
+    </div>
+
+    <nav class="office-menu" aria-label="辦公室選單"></nav>
+
+    <section class="office-title is-empty" aria-label="目前位置" aria-live="polite">
+      <h1></h1>
+      <p></p>
+    </section>
+
+    <a class="office-profile" href="office.html" aria-label="角色資料">
+      <img src="assets/card-3.jpeg" alt="">
+      <span>
+        <strong>墨非</strong>
+        <small>Lv.99</small>
+      </span>
+      <i></i>
+    </a>
+
+    <a class="office-next" href="love-letter.html" aria-label="前往情書集">
+      <img src="assets/logo-go-letter.png" alt="前往情書集">
+    </a>
+    <button class="collection-trigger" type="button" aria-label="打開典藏盒"></button>
+
+    <section class="collection-modal" aria-hidden="true" aria-label="典藏盒">
+      <div class="collection-backdrop" data-close-collection></div>
+      <div class="collection-box" role="dialog" aria-modal="true" aria-labelledby="collection-title">
+        <button class="collection-close" type="button" data-close-collection aria-label="關閉典藏盒">×</button>
+        <div class="collection-lid" aria-hidden="true"></div>
+        <header class="collection-header">
+          <span>MO FEI MEMORY</span>
+          <h2 id="collection-title">典藏盒</h2>
+          <p>收藏的每一瞬心動，都在這裡。</p>
+        </header>
+        <div class="collection-grid" aria-live="polite"></div>
+      </div>
+      <div class="collection-preview" aria-hidden="true">
+        <button class="collection-preview-backdrop" type="button" data-close-preview aria-label="關閉照片預覽"></button>
+        <figure class="collection-preview-frame" role="dialog" aria-modal="true" aria-label="典藏照片預覽">
+          <button class="collection-preview-close" type="button" data-close-preview aria-label="關閉照片預覽">×</button>
+          <img class="collection-preview-image" src="" alt="">
+          <figcaption class="collection-preview-caption"></figcaption>
+          <a class="collection-preview-download" href="#" download>下載此照片</a>
+        </figure>
+      </div>
+    </section>
+  </main>
+  <script src="menu.js"></script>
+  <script src="audio.js"></script>
+  <script>
+    const office = document.querySelector(".parallax-office");
+    const officeTitle = document.querySelector(".office-title");
+    const officeTitleText = officeTitle.querySelector("h1");
+    const officeDescription = officeTitle.querySelector("p");
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    function setParallax(x, y) {
+      currentX = clamp(x, -1, 1);
+      currentY = clamp(y, -1, 1);
+      office.style.setProperty("--office-x", currentX.toFixed(3));
+      office.style.setProperty("--office-y", currentY.toFixed(3));
+      office.style.setProperty("--stage-tilt-x", `${(-currentY * 4).toFixed(2)}deg`);
+      office.style.setProperty("--stage-tilt-y", `${(currentX * 5).toFixed(2)}deg`);
+      office.style.setProperty("--stage-shift-x", `${(-currentX * 10).toFixed(1)}px`);
+      office.style.setProperty("--stage-shift-y", `${(-currentY * 8).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-x", `${(-currentX * 72).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-y", `${(-currentY * 24).toFixed(1)}px`);
+      office.style.setProperty("--light-x", `${(54 + currentX * 12).toFixed(1)}%`);
+      office.style.setProperty("--light-y", `${(38 + currentY * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-x", `${(78 - currentX * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-y", `${(28 + currentY * 5).toFixed(1)}%`);
+      office.style.setProperty("--light-shift-x", `${(currentX * 34).toFixed(1)}px`);
+      office.style.setProperty("--light-shift-y", `${(currentY * 18).toFixed(1)}px`);
+    }
+
+    office.addEventListener("pointerdown", (event) => {
+      if (event.target.closest("a, button")) return;
+      isDragging = true;
+      startX = event.clientX - currentX * 240;
+      startY = event.clientY - currentY * 180;
+      office.classList.add("is-dragging");
+      office.setPointerCapture(event.pointerId);
+    });
+
+    office.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      setParallax((event.clientX - startX) / 240, (event.clientY - startY) / 180);
+    });
+
+    function stopDragging(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      office.classList.remove("is-dragging");
+      if (office.hasPointerCapture(event.pointerId)) {
+        office.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    office.addEventListener("pointerup", stopDragging);
+    office.addEventListener("pointercancel", stopDragging);
+    office.addEventListener("dblclick", () => setParallax(0, 0));
+
+    const collectionTrigger = document.querySelector(".collection-trigger");
+    const collectionModal = document.querySelector(".collection-modal");
+    const collectionGrid = document.querySelector(".collection-grid");
+    const collectionCloseTargets = document.querySelectorAll("[data-close-collection]");
+    const collectionPreview = document.querySelector(".collection-preview");
+    const previewImage = document.querySelector(".collection-preview-image");
+    const previewCaption = document.querySelector(".collection-preview-caption");
+    const previewDownload = document.querySelector(".collection-preview-download");
+    const previewCloseTargets = document.querySelectorAll("[data-close-preview]");
+    let collectionLoaded = false;
+    const fallbackCards = [
+          "assets/cards/P01.png",
+          "assets/cards/P02.png",
+          "assets/cards/P03.png",
+          "assets/cards/P04.webp",
+          "assets/cards/P05.webp",
+          "assets/cards/P06.webp",
+          "assets/cards/P07.webp",
+          "assets/cards/P08 2.png",
+          "assets/cards/P08.png",
+          "assets/cards/P10.png",
+          "assets/cards/P11.webp",
+          "assets/cards/P12.webp",
+          "assets/cards/P13.webp",
+          "assets/cards/P14.webp",
+          "assets/cards/P15.webp",
+          "assets/cards/P16.webp",
+          "assets/cards/P17.webp",
+          "assets/cards/P18.webp",
+          "assets/cards/P19.webp",
+          "assets/cards/P20.webp",
+          "assets/cards/P21.webp",
+          "assets/cards/P22.webp",
+          "assets/cards/P24.webp",
+          "assets/cards/P25.webp",
+          "assets/cards/P26.webp",
+          "assets/cards/P27.webp",
+          "assets/cards/P28.webp",
+          "assets/cards/P29.png",
+          "assets/cards/P30.webp",
+          "assets/cards/P31.webp",
+          "assets/cards/P32.webp",
+          "assets/cards/P33.webp",
+          "assets/cards/P34.webp",
+          "assets/cards/P35.webp",
+          "assets/cards/P36.png",
+          "assets/cards/P37.webp",
+          "assets/cards/P38.webp",
+          "assets/cards/P39.png",
+          "assets/cards/P40.webp",
+          "assets/cards/P41.webp",
+          "assets/cards/P42.webp",
+          "assets/cards/P43.png",
+          "assets/cards/P44.webp",
+          "assets/cards/P46.webp",
+          "assets/cards/P47.webp",
+          "assets/cards/P48.png",
+          "assets/cards/P49.webp",
+          "assets/cards/P50.webp",
+          "assets/cards/P51.webp",
+          "assets/cards/P52.webp",
+          "assets/cards/P53.webp",
+          "assets/cards/P54.webp",
+          "assets/cards/P55.webp",
+          "assets/cards/P56.webp",
+          "assets/cards/P57.webp"
+    ];
+
+    async function loadCollectionCards() {
+      if (collectionLoaded) return;
+
+      let data = { cards: fallbackCards };
+
+      try {
+        const response = await fetch("assets/cards-manifest.json", { cache: "no-store" });
+        if (response.ok) {
+          data = await response.json();
+        }
+      } catch (error) {
+        data = { cards: fallbackCards };
+      }
+
+      const cards = Array.isArray(data.cards) ? data.cards : [];
+
+      collectionGrid.replaceChildren(...cards.map((src, index) => {
+        const figure = document.createElement("figure");
+        figure.className = "collection-card";
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.setAttribute("aria-label", `放大典藏照片 ${index + 1}`);
+
+        const image = document.createElement("img");
+        image.src = src;
+        image.alt = `典藏照片 ${index + 1}`;
+        image.loading = "lazy";
+        button.append(image);
+
+        const caption = document.createElement("figcaption");
+        caption.textContent = `Memory ${String(index + 1).padStart(2, "0")}`;
+
+        button.addEventListener("click", () => openPreview(src, caption.textContent, image.alt));
+
+        figure.append(button, caption);
+        return figure;
+      }));
+
+      collectionLoaded = true;
+    }
+
+    async function openCollection() {
+      await loadCollectionCards();
+      collectionModal.classList.add("is-open");
+      collectionModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeCollection() {
+      closePreview();
+      collectionModal.classList.remove("is-open");
+      collectionModal.setAttribute("aria-hidden", "true");
+    }
+
+    function openPreview(src, caption, alt) {
+      previewImage.src = src;
+      previewImage.alt = alt;
+      previewCaption.textContent = caption;
+      previewDownload.href = src;
+      previewDownload.download = src.split("/").pop() || `${caption}.png`;
+      collectionPreview.classList.add("is-open");
+      collectionPreview.setAttribute("aria-hidden", "false");
+    }
+
+    function closePreview() {
+      collectionPreview.classList.remove("is-open");
+      collectionPreview.setAttribute("aria-hidden", "true");
+      previewImage.removeAttribute("src");
+      previewImage.alt = "";
+    }
+
+    function showCollectionGlow() {
+      office.classList.add("collection-hotspot-active");
+    }
+
+    function hideCollectionGlow() {
+      office.classList.remove("collection-hotspot-active");
+    }
+
+    collectionTrigger.addEventListener("pointerenter", showCollectionGlow);
+    collectionTrigger.addEventListener("pointerleave", hideCollectionGlow);
+    collectionTrigger.addEventListener("focus", showCollectionGlow);
+    collectionTrigger.addEventListener("blur", hideCollectionGlow);
+    collectionTrigger.addEventListener("click", openCollection);
+    collectionCloseTargets.forEach((target) => target.addEventListener("click", closeCollection));
+    previewCloseTargets.forEach((target) => target.addEventListener("click", closePreview));
+    window.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (collectionPreview.classList.contains("is-open")) {
+        closePreview();
+        return;
+      }
+      closeCollection();
+    });
+
+    initPhymoMenu({
+      menuSelector: ".office-menu",
+      titlePanelSelector: ".office-title",
+      titleSelector: ".office-title h1",
+      descSelector: ".office-title p",
+    });
+  </script>
+</body>
+</html>

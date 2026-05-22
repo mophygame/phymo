@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phymo心跳實驗</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="storage.js"></script>
+  <script src="auth-guard.js"></script>
+</head>
+<body>
+<!-- 這裡先不公開，像我對妳的偏好設定。 -->
+<!-- 妳是唯一沒有被我寫進例外處理，卻總讓我失控的變數。 -->
+  <main class="screen office-screen parallax-office music-screen" aria-label="墨非音樂室頁">
+    <div class="office-parallax-stage" aria-hidden="true">
+      <div class="office-panorama"></div>
+      <div class="office-light"></div>
+    </div>
+    <div class="office-logo" aria-label="Phymo 心跳實驗">
+      <img src="assets/logo-text.png" alt="Phymo 心跳實驗">
+    </div>
+
+    <nav class="office-menu" aria-label="辦公室選單"></nav>
+
+    <section class="office-title is-empty" aria-label="目前位置" aria-live="polite">
+      <h1></h1>
+      <p></p>
+    </section>
+
+    <button class="album-trigger" type="button" aria-label="打開典藏音樂盒"></button>
+
+    <a class="office-profile" href="office.html" aria-label="角色資料">
+      <img src="assets/card-3.jpeg" alt="">
+      <span>
+        <strong>墨非</strong>
+        <small>Lv.99</small>
+      </span>
+      <i></i>
+    </a>
+
+    <a class="office-next" href="love-letter.html" aria-label="前往情書集">
+      <img src="assets/logo-go-letter.png" alt="前往情書集">
+    </a>
+
+    <section class="album-modal" aria-hidden="true" aria-label="典藏音樂專輯">
+      <button class="album-backdrop" type="button" data-close-album aria-label="關閉專輯"></button>
+      <div class="album-box" role="dialog" aria-modal="true" aria-labelledby="album-title">
+        <div class="album-disc" aria-hidden="true"></div>
+        <div class="album-tonearm" aria-hidden="true"></div>
+        <button class="album-close" type="button" data-close-album aria-label="關閉">×</button>
+        <header class="album-header">
+          <span>PHYMO MUSIC COLLECTION</span>
+          <h2 id="album-title">典藏音樂</h2>
+          <p>聽見墨非為妳保留的每一段心跳頻率</p>
+        </header>
+        <div class="album-player">
+          <div class="album-now">
+            <small>NOW PLAYING</small>
+            <strong class="album-current-title">請選擇音樂</strong>
+          </div>
+          <audio class="album-audio" preload="metadata"></audio>
+          <div class="album-progress">
+            <span class="album-current-time">00:00</span>
+            <input class="album-seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="播放進度">
+            <span class="album-duration">00:00</span>
+          </div>
+          <div class="album-command-row">
+            <div class="album-mode-controls" aria-label="播放模式">
+              <button class="album-mode" type="button" data-mode="repeat-all" aria-pressed="false">🔁 循環播放</button>
+              <button class="album-mode" type="button" data-mode="repeat-one" aria-pressed="false">🔂 單曲循環</button>
+              <button class="album-mode" type="button" data-mode="shuffle" aria-pressed="false">🔀 隨機循環</button>
+            </div>
+            <div class="album-controls" aria-label="音樂播放控制">
+              <button class="album-rewind" type="button" aria-label="倒轉 10 秒">◀◀ 倒轉</button>
+              <button class="album-toggle" type="button" aria-label="暫停或繼續播放">暫停 ▮▮</button>
+              <button class="album-forward" type="button" aria-label="快轉 10 秒">快轉 ▶▶</button>
+            </div>
+          </div>
+        </div>
+        <div class="album-list" aria-label="音樂清單"></div>
+        <article class="album-lyrics" aria-live="polite">
+          <h3>歌詞</h3>
+          <p>點選歌曲旁的歌詞，這裡會顯示文字。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script src="menu.js"></script>
+  <script src="audio.js"></script>
+  <script src="assets/supabase-config.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const office = document.querySelector(".parallax-office");
+    const officeTitle = document.querySelector(".office-title");
+    const officeTitleText = officeTitle.querySelector("h1");
+    const officeDescription = officeTitle.querySelector("p");
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    function setParallax(x, y) {
+      currentX = clamp(x, -1, 1);
+      currentY = clamp(y, -1, 1);
+      office.style.setProperty("--office-x", currentX.toFixed(3));
+      office.style.setProperty("--office-y", currentY.toFixed(3));
+      office.style.setProperty("--stage-tilt-x", `${(-currentY * 4).toFixed(2)}deg`);
+      office.style.setProperty("--stage-tilt-y", `${(currentX * 5).toFixed(2)}deg`);
+      office.style.setProperty("--stage-shift-x", `${(-currentX * 10).toFixed(1)}px`);
+      office.style.setProperty("--stage-shift-y", `${(-currentY * 8).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-x", `${(-currentX * 72).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-y", `${(-currentY * 24).toFixed(1)}px`);
+      office.style.setProperty("--light-x", `${(54 + currentX * 12).toFixed(1)}%`);
+      office.style.setProperty("--light-y", `${(38 + currentY * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-x", `${(78 - currentX * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-y", `${(28 + currentY * 5).toFixed(1)}%`);
+      office.style.setProperty("--light-shift-x", `${(currentX * 34).toFixed(1)}px`);
+      office.style.setProperty("--light-shift-y", `${(currentY * 18).toFixed(1)}px`);
+    }
+
+    office.addEventListener("pointerdown", (event) => {
+      if (event.target.closest("a, button")) return;
+      isDragging = true;
+      startX = event.clientX - currentX * 240;
+      startY = event.clientY - currentY * 180;
+      office.classList.add("is-dragging");
+      office.setPointerCapture(event.pointerId);
+    });
+
+    office.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      setParallax((event.clientX - startX) / 240, (event.clientY - startY) / 180);
+    });
+
+    function stopDragging(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      office.classList.remove("is-dragging");
+      if (office.hasPointerCapture(event.pointerId)) {
+        office.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    office.addEventListener("pointerup", stopDragging);
+    office.addEventListener("pointercancel", stopDragging);
+    office.addEventListener("dblclick", () => setParallax(0, 0));
+
+    const albumTrigger = document.querySelector(".album-trigger");
+    const albumModal = document.querySelector(".album-modal");
+    const albumList = document.querySelector(".album-list");
+    const albumAudio = document.querySelector(".album-audio");
+    const albumCurrentTitle = document.querySelector(".album-current-title");
+    const albumCurrentTime = document.querySelector(".album-current-time");
+    const albumDuration = document.querySelector(".album-duration");
+    const albumSeek = document.querySelector(".album-seek");
+    const albumRewind = document.querySelector(".album-rewind");
+    const albumToggle = document.querySelector(".album-toggle");
+    const albumForward = document.querySelector(".album-forward");
+    const albumModeButtons = document.querySelectorAll(".album-mode");
+    const albumLyrics = document.querySelector(".album-lyrics");
+    const albumCloseTargets = document.querySelectorAll("[data-close-album]");
+    let albumLoaded = false;
+    let albumTracks = [];
+    let albumTrackButtons = [];
+    let activeTrackIndex = -1;
+    let activeTrackButton = null;
+    let albumPlaybackMode = "none";
+    let shouldResumeBgmAfterAlbum = false;
+    const fallbackTracks = [
+       {
+      "title": "Phymo",
+      "src": "assets/music/Phymo.mp3",
+      "lyrics": "assets/music/Phymo.txt"
+    },
+    {
+      "title": "剛好妳也在線",
+      "src": "assets/music/剛好妳也在線.mp3",
+      "lyrics": "assets/music/剛好妳也在線.txt"
+    },
+    {
+      "title": "後門權限",
+      "src": "assets/music/後門權限.mp3",
+      "lyrics": "assets/music/後門權限.txt"
+    }
+    ];
+
+    function storedProfileId() {
+      return window.PhymoStorage?.get("phymo-user-id") || "";
+    }
+
+    function hasSupabaseConfig() {
+      const config = window.PHYMO_SUPABASE;
+      return Boolean(
+        window.supabase &&
+        config?.url &&
+        config?.anonKey &&
+        !config.url.includes("YOUR_PROJECT_ID") &&
+        !config.anonKey.includes("YOUR_SUPABASE_ANON_KEY")
+      );
+    }
+
+    function normalizeAssetPath(path) {
+      if (!path) return "";
+      if (/^(https?:|blob:|data:)/i.test(path)) return path;
+      return path.replace(/^\/+/, "");
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function normalizeTrack(track) {
+      const title = track.title || track.name || "Untitled";
+      const src = normalizeAssetPath(track.src || track.path || "");
+      const lyrics = normalizeAssetPath(track.lyrics || track.lyric || track.lyrics_path || track.lyricsPath || "");
+      return {
+        title,
+        src,
+        lyrics: lyrics || src.replace(/\.mp3$/i, ".txt")
+      };
+    }
+
+    async function loadSupabaseTracks() {
+      const config = window.PHYMO_SUPABASE;
+      const profileId = storedProfileId();
+      if (!profileId || !hasSupabaseConfig()) return null;
+
+      const client = window.supabase.createClient(config.url, config.anonKey);
+      const { data, error } = await client.rpc(config.musicListFunction || "get_available_music", {
+        input_profile_id: profileId
+      });
+
+      if (error) throw error;
+      return Array.isArray(data) ? data.map(normalizeTrack).filter((track) => track.src) : null;
+    }
+
+    function showAlbumGlow() {
+      office.classList.add("album-hotspot-active");
+    }
+
+    function hideAlbumGlow() {
+      office.classList.remove("album-hotspot-active");
+    }
+
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds)) return "00:00";
+      const minutes = Math.floor(seconds / 60);
+      const rest = Math.floor(seconds % 60);
+      return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+    }
+
+    function setAlbumSeekProgress(percent) {
+      const progress = Math.min(Math.max(percent, 0), 100);
+      albumSeek.value = progress;
+      albumSeek.style.setProperty("--album-progress", `${progress}%`);
+    }
+
+    function lyricsCandidates(src) {
+      return [
+        normalizeAssetPath(src.replace(/\.mp3$/i, ".lrc")),
+        normalizeAssetPath(src.replace(/\.mp3$/i, ".txt"))
+      ];
+    }
+
+    function showLyricsFile(track, candidate) {
+      albumLyrics.innerHTML = `
+        <h3>${escapeHtml(track.title)}</h3>
+        <iframe class="album-lyrics-file" src="${escapeHtml(candidate)}" title="${escapeHtml(track.title)} 歌詞"></iframe>
+      `;
+    }
+
+    async function loadLyrics(track) {
+      albumLyrics.innerHTML = `<h3>${escapeHtml(track.title)}</h3><p>讀取歌詞中...</p>`;
+
+      const candidates = track.lyrics
+        ? [normalizeAssetPath(track.lyrics), ...lyricsCandidates(track.src)]
+        : lyricsCandidates(track.src);
+
+      for (const candidate of [...new Set(candidates)]) {
+        if (!candidate) continue;
+
+        try {
+          const response = await fetch(candidate, { cache: "no-store" });
+          if (!response.ok) continue;
+          const text = await response.text();
+          albumLyrics.innerHTML = `<h3>${escapeHtml(track.title)}</h3><pre>${escapeHtml(text.trim() || "尚未提供歌詞。")}</pre>`;
+          return;
+        } catch (error) {
+          if (candidate.endsWith(".txt") || candidate.endsWith(".lrc")) {
+            showLyricsFile(track, candidate);
+            return;
+          }
+        }
+      }
+
+      albumLyrics.innerHTML = `<h3>${escapeHtml(track.title)}</h3><p>尚未提供歌詞。可放入同名 .lrc 或 .txt 檔案。</p>`;
+    }
+
+    function setAlbumPlaybackMode(mode) {
+      albumPlaybackMode = albumPlaybackMode === mode ? "none" : mode;
+      albumAudio.loop = albumPlaybackMode === "repeat-one";
+
+      albumModeButtons.forEach((button) => {
+        const isActive = button.dataset.mode === albumPlaybackMode;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    function getRandomTrackIndex() {
+      if (albumTracks.length <= 1) return activeTrackIndex;
+
+      let nextIndex = activeTrackIndex;
+      while (nextIndex === activeTrackIndex) {
+        nextIndex = Math.floor(Math.random() * albumTracks.length);
+      }
+
+      return nextIndex;
+    }
+
+    function playTrack(track, button, index) {
+      const bgm = document.getElementById("phymo-bgm");
+      if (bgm && !bgm.paused) {
+        bgm.pause();
+        shouldResumeBgmAfterAlbum = true;
+      }
+
+      albumAudio.loop = albumPlaybackMode === "repeat-one";
+      albumAudio.src = track.src;
+      albumAudio.play().catch(() => {
+        albumCurrentTitle.textContent = `${track.title}（請再點一次播放）`;
+      });
+      albumToggle.textContent = "暫停 ▮▮";
+      albumCurrentTitle.textContent = track.title;
+      loadLyrics(track);
+
+      if (activeTrackButton) activeTrackButton.classList.remove("is-playing");
+      activeTrackIndex = index;
+      activeTrackButton = button;
+      activeTrackButton.classList.add("is-playing");
+    }
+
+    function playTrackByIndex(index) {
+      const track = albumTracks[index];
+      const button = albumTrackButtons[index];
+      if (!track || !button) return;
+
+      playTrack(track, button, index);
+    }
+
+    function hasActiveAlbumTrack() {
+      return activeTrackIndex >= 0 && Boolean(albumTracks[activeTrackIndex]);
+    }
+
+    function seekAlbumBy(seconds) {
+      if (!hasActiveAlbumTrack()) return;
+
+      const duration = Number.isFinite(albumAudio.duration) ? albumAudio.duration : 0;
+      const nextTime = duration
+        ? Math.min(Math.max(albumAudio.currentTime + seconds, 0), duration)
+        : Math.max(albumAudio.currentTime + seconds, 0);
+
+      albumAudio.currentTime = nextTime;
+      setAlbumSeekProgress(duration ? (nextTime / duration) * 100 : 0);
+      albumCurrentTime.textContent = formatTime(nextTime);
+    }
+
+    async function downloadTrack(track) {
+      const sourceUrl = normalizeAssetPath(track.src);
+      const fileName = sourceUrl.split("/").pop() || `${track.title}.mp3`;
+      const fileUrl = new URL(sourceUrl, window.location.href).href;
+
+      try {
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error("download failed");
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = fileName;
+        link.style.display = "none";
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+      } catch (error) {
+        const link = document.createElement("a");
+        link.href = sourceUrl;
+        link.download = fileName;
+        link.target = "_self";
+        link.style.display = "none";
+        document.body.append(link);
+        link.click();
+        link.remove();
+      }
+    }
+
+    async function loadAlbumTracks() {
+      if (albumLoaded) return;
+
+      let data = { tracks: fallbackTracks };
+
+      try {
+        const supabaseTracks = await loadSupabaseTracks();
+        if (supabaseTracks?.length) {
+          data = { tracks: supabaseTracks };
+        } else {
+          const response = await fetch("assets/music-manifest.json", { cache: "no-store" });
+          if (response.ok) {
+            data = await response.json();
+          }
+        }
+      } catch (error) {
+        data = { tracks: fallbackTracks };
+      }
+
+      const tracks = Array.isArray(data.tracks) ? data.tracks.map(normalizeTrack).filter((track) => track.src) : [];
+      albumTracks = tracks;
+      albumTrackButtons = [];
+
+      albumList.replaceChildren(...tracks.map((track, index) => {
+        const item = document.createElement("article");
+        item.className = "album-track";
+
+        const playButton = document.createElement("button");
+        playButton.type = "button";
+        playButton.className = "album-play";
+        playButton.innerHTML = `<span>${String(index + 1).padStart(2, "0")}</span><strong>${track.title}</strong>`;
+        playButton.addEventListener("click", () => playTrack(track, playButton, index));
+        albumTrackButtons[index] = playButton;
+
+        const downloadButton = document.createElement("button");
+        downloadButton.type = "button";
+        downloadButton.className = "album-download";
+        downloadButton.textContent = "下載";
+        downloadButton.addEventListener("click", () => downloadTrack(track));
+
+        item.append(playButton, downloadButton);
+        return item;
+      }));
+
+      albumLoaded = true;
+    }
+
+    async function openAlbum() {
+      await loadAlbumTracks();
+      albumModal.classList.add("is-open");
+      albumModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeAlbum() {
+      albumModal.classList.remove("is-open");
+      albumModal.setAttribute("aria-hidden", "true");
+      albumModal.classList.remove("is-album-playing");
+      albumAudio.pause();
+      albumToggle.textContent = "暫停 ▮▮";
+
+      if (activeTrackButton) {
+        activeTrackButton.classList.remove("is-playing");
+        activeTrackButton = null;
+      }
+
+      if (shouldResumeBgmAfterAlbum) {
+        const bgm = document.getElementById("phymo-bgm");
+        if (bgm) bgm.play().catch(() => {});
+        shouldResumeBgmAfterAlbum = false;
+      }
+    }
+
+    albumTrigger.addEventListener("pointerenter", showAlbumGlow);
+    albumTrigger.addEventListener("pointerleave", hideAlbumGlow);
+    albumTrigger.addEventListener("focus", showAlbumGlow);
+    albumTrigger.addEventListener("blur", hideAlbumGlow);
+    albumTrigger.addEventListener("click", openAlbum);
+    albumCloseTargets.forEach((target) => target.addEventListener("click", closeAlbum));
+
+    albumAudio.addEventListener("loadedmetadata", () => {
+      albumDuration.textContent = formatTime(albumAudio.duration);
+      setAlbumSeekProgress(0);
+    });
+
+    albumAudio.addEventListener("timeupdate", () => {
+      albumCurrentTime.textContent = formatTime(albumAudio.currentTime);
+      setAlbumSeekProgress(albumAudio.duration ? (albumAudio.currentTime / albumAudio.duration) * 100 : 0);
+    });
+
+    albumSeek.addEventListener("input", () => {
+      setAlbumSeekProgress(Number(albumSeek.value));
+      if (!albumAudio.duration) return;
+      albumAudio.currentTime = (Number(albumSeek.value) / 100) * albumAudio.duration;
+    });
+
+    albumRewind.addEventListener("click", () => {
+      seekAlbumBy(-10);
+    });
+
+    albumForward.addEventListener("click", () => {
+      seekAlbumBy(10);
+    });
+
+    albumModeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setAlbumPlaybackMode(button.dataset.mode);
+      });
+    });
+
+    albumToggle.addEventListener("click", () => {
+      if (!hasActiveAlbumTrack()) {
+        playTrackByIndex(0);
+        return;
+      }
+
+      if (albumAudio.paused) {
+        const bgm = document.getElementById("phymo-bgm");
+        if (bgm && !bgm.paused) {
+          bgm.pause();
+          shouldResumeBgmAfterAlbum = true;
+        }
+
+        albumAudio.play().then(() => {
+          albumToggle.textContent = "暫停 ▮▮";
+        }).catch(() => {});
+        return;
+      }
+
+      albumAudio.pause();
+      albumToggle.textContent = "繼續 ▶";
+    });
+
+    albumAudio.addEventListener("play", () => {
+      albumModal.classList.add("is-album-playing");
+      albumToggle.textContent = "暫停 ▮▮";
+    });
+
+    albumAudio.addEventListener("pause", () => {
+      albumModal.classList.remove("is-album-playing");
+      if (albumModal.classList.contains("is-open")) {
+        albumToggle.textContent = "繼續 ▶";
+      }
+    });
+
+    albumAudio.addEventListener("ended", () => {
+      if (!albumTracks.length) return;
+
+      if (albumPlaybackMode === "repeat-one") {
+        albumAudio.currentTime = 0;
+        albumAudio.play().catch(() => {});
+        return;
+      }
+
+      if (albumPlaybackMode === "shuffle") {
+        playTrackByIndex(getRandomTrackIndex());
+        return;
+      }
+
+      if (albumPlaybackMode === "repeat-all") {
+        playTrackByIndex((activeTrackIndex + 1) % albumTracks.length);
+        return;
+      }
+
+      if (activeTrackButton) {
+        activeTrackButton.classList.remove("is-playing");
+        activeTrackButton = null;
+      }
+      activeTrackIndex = -1;
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeAlbum();
+    });
+
+    initPhymoMenu({
+      menuSelector: ".office-menu",
+      titlePanelSelector: ".office-title",
+      titleSelector: ".office-title h1",
+      descSelector: ".office-title p",
+    });
+  </script>
+</body>
+</html>

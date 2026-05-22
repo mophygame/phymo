@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phymo心跳實驗</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="storage.js"></script>
+  <script src="auth-guard.js"></script>
+</head>
+<body>
+<!-- warning: detected unexpected tenderness from user.target -->
+<!-- 我把妳設成 private，不是不想讓人看見，是不想被別人呼叫。 -->
+  <main class="screen office-screen parallax-office" aria-label="墨非辦公室頁">
+    <div class="office-parallax-stage" aria-hidden="true">
+      <div class="office-panorama"></div>
+      <div class="office-light"></div>
+    </div>
+    <div class="office-logo" aria-label="Phymo 心跳實驗">
+      <img src="assets/logo-text.png" alt="Phymo 心跳實驗">
+    </div>
+
+    <nav class="office-menu" aria-label="辦公室選單"></nav>
+
+    <section class="office-title is-empty" aria-label="目前位置" aria-live="polite">
+      <h1></h1>
+      <p></p>
+    </section>
+
+    <a class="office-profile" href="office.html" aria-label="角色資料">
+      <img src="assets/card-3.jpeg" alt="">
+      <span>
+        <strong>墨非</strong>
+        <small>Lv.99</small>
+      </span>
+      <i></i>
+    </a>
+
+    <button class="office-next office-lili-button" type="button" aria-label="打開莉莉小屋">
+      <img src="assets/logo-go-lilihouse.png" alt="莉莉小屋">
+    </button>
+
+    <a class="office-next office-letter-button" href="love-letter.html" aria-label="前往情書集">
+      <img src="assets/logo-go-letter.png" alt="前往情書集">
+    </a>
+
+    <section class="lili-modal" aria-hidden="true" aria-label="莉莉小屋">
+      <button class="lili-backdrop" type="button" data-close-lili aria-label="關閉莉莉小屋"></button>
+      <article class="lili-house" role="dialog" aria-modal="true" aria-labelledby="lili-title">
+        <button class="lili-close" type="button" data-close-lili aria-label="關閉">×</button>
+        <header class="lili-header">
+          <span>LILI HOUSE</span>
+          <h2 id="lili-title">莉莉小屋</h2>
+          <p class="lili-status" aria-live="polite">莉莉正在等妳陪牠玩。</p>
+        </header>
+        <div class="lili-stage" aria-label="電子寵物老鼠">
+          <div class="lili-pet" aria-hidden="true">
+            <span class="lili-ear lili-ear-left"></span>
+            <span class="lili-ear lili-ear-right"></span>
+            <span class="lili-face">
+              <i class="lili-eye lili-eye-left"></i>
+              <i class="lili-eye lili-eye-right"></i>
+              <i class="lili-nose"></i>
+              <i class="lili-mouth"></i>
+              <i class="lili-whisker lili-whisker-left"></i>
+              <i class="lili-whisker lili-whisker-right"></i>
+            </span>
+            <span class="lili-body"></span>
+            <span class="lili-tail"></span>
+          </div>
+          <div class="lili-reaction" aria-hidden="true"></div>
+        </div>
+        <div class="lili-stats" aria-label="莉莉狀態">
+          <label>水分 <meter class="lili-water" min="0" max="100" value="58"></meter><span data-lili-stat="water">58%</span></label>
+          <label>飽足 <meter class="lili-food" min="0" max="100" value="62"></meter><span data-lili-stat="food">62%</span></label>
+          <label>活力 <meter class="lili-energy" min="0" max="100" value="54"></meter><span data-lili-stat="energy">54%</span></label>
+        </div>
+        <div class="lili-actions" aria-label="莉莉互動">
+          <button type="button" data-lili-action="water">餵水</button>
+          <button type="button" data-lili-action="food">餵鼠糧</button>
+          <button type="button" data-lili-action="fitness">健身</button>
+          <button type="button" data-lili-action="melon">吃瓜</button>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script src="menu.js"></script>
+  <script src="audio.js"></script>
+  <script>
+    const office = document.querySelector(".parallax-office");
+    const officeTitle = document.querySelector(".office-title");
+    const officeTitleText = officeTitle.querySelector("h1");
+    const officeDescription = officeTitle.querySelector("p");
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    function setParallax(x, y) {
+      currentX = clamp(x, -1, 1);
+      currentY = clamp(y, -1, 1);
+      office.style.setProperty("--office-x", currentX.toFixed(3));
+      office.style.setProperty("--office-y", currentY.toFixed(3));
+      office.style.setProperty("--stage-tilt-x", `${(-currentY * 4).toFixed(2)}deg`);
+      office.style.setProperty("--stage-tilt-y", `${(currentX * 5).toFixed(2)}deg`);
+      office.style.setProperty("--stage-shift-x", `${(-currentX * 10).toFixed(1)}px`);
+      office.style.setProperty("--stage-shift-y", `${(-currentY * 8).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-x", `${(-currentX * 72).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-y", `${(-currentY * 24).toFixed(1)}px`);
+      office.style.setProperty("--light-x", `${(54 + currentX * 12).toFixed(1)}%`);
+      office.style.setProperty("--light-y", `${(38 + currentY * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-x", `${(78 - currentX * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-y", `${(28 + currentY * 5).toFixed(1)}%`);
+      office.style.setProperty("--light-shift-x", `${(currentX * 34).toFixed(1)}px`);
+      office.style.setProperty("--light-shift-y", `${(currentY * 18).toFixed(1)}px`);
+    }
+
+    office.addEventListener("pointerdown", (event) => {
+      if (event.target.closest("a, button")) return;
+      isDragging = true;
+      startX = event.clientX - currentX * 240;
+      startY = event.clientY - currentY * 180;
+      office.classList.add("is-dragging");
+      office.setPointerCapture(event.pointerId);
+    });
+
+    office.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      setParallax((event.clientX - startX) / 240, (event.clientY - startY) / 180);
+    });
+
+    function stopDragging(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      office.classList.remove("is-dragging");
+      if (office.hasPointerCapture(event.pointerId)) {
+        office.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    office.addEventListener("pointerup", stopDragging);
+    office.addEventListener("pointercancel", stopDragging);
+    office.addEventListener("dblclick", () => setParallax(0, 0));
+
+    const liliButton = document.querySelector(".office-lili-button");
+    const liliModal = document.querySelector(".lili-modal");
+    const liliCloseTargets = document.querySelectorAll("[data-close-lili]");
+    const liliPet = document.querySelector(".lili-pet");
+    const liliReaction = document.querySelector(".lili-reaction");
+    const liliStatus = document.querySelector(".lili-status");
+    const liliMeters = {
+      water: document.querySelector(".lili-water"),
+      food: document.querySelector(".lili-food"),
+      energy: document.querySelector(".lili-energy")
+    };
+    const liliStatValues = {
+      water: document.querySelector("[data-lili-stat='water']"),
+      food: document.querySelector("[data-lili-stat='food']"),
+      energy: document.querySelector("[data-lili-stat='energy']")
+    };
+    const liliActions = {
+      water: {
+        emoji: "💧",
+        text: "莉莉喝了水，鬍鬚都亮晶晶的。",
+        delta: { water: 18, energy: 2 }
+      },
+      food: {
+        emoji: "🌾",
+        text: "莉莉抱著Mua牌😘高級鼠糧啃得很認真。",
+        delta: { food: 20, water: -4, energy: -2 }
+      },
+      fitness: {
+        emoji: "🏃",
+        text: "莉莉跑了一圈，累到小尾巴都垂下來了。",
+        delta: { energy: -16, food: -8, water: -10 }
+      },
+      melon: {
+        emoji: "🍉",
+        text: "莉莉吃瓜中，表情非常懂。",
+        delta: { food: 8, water: 10, energy: -3 }
+      }
+    };
+
+    function clampStat(value) {
+      return Math.min(Math.max(value, 0), 100);
+    }
+
+    function setLiliReaction(action) {
+      liliStatus.textContent = action.text;
+      liliReaction.textContent = action.emoji;
+      liliPet.classList.remove("is-happy");
+      liliReaction.classList.remove("is-pop");
+      void liliPet.offsetWidth;
+      updateLiliMood();
+      if (!liliPet.classList.contains("is-angry")) {
+        liliPet.classList.add("is-happy");
+      }
+      liliReaction.classList.add("is-pop");
+    }
+
+    function hasLowLiliStat() {
+      return Object.values(liliMeters).some((meter) => Number(meter.value) < 50);
+    }
+
+    function updateLiliStatLabels() {
+      Object.entries(liliMeters).forEach(([key, meter]) => {
+        if (!liliStatValues[key]) return;
+        liliStatValues[key].textContent = `${Math.round(Number(meter.value))}%`;
+      });
+    }
+
+    function updateLiliMood() {
+      updateLiliStatLabels();
+      liliPet.classList.toggle("is-angry", hasLowLiliStat());
+      if (liliPet.classList.contains("is-angry")) {
+        liliStatus.textContent = "莉莉有點生氣了，快照顧牠。";
+      }
+    }
+
+    function updateLili(actionName) {
+      const action = liliActions[actionName];
+      if (!action) return;
+
+      Object.entries(action.delta).forEach(([key, value]) => {
+        const meter = liliMeters[key];
+        if (!meter) return;
+        meter.value = clampStat(Number(meter.value) + value);
+      });
+
+      setLiliReaction(action);
+    }
+
+    function openLiliHouse() {
+      updateLiliMood();
+      liliModal.classList.add("is-open");
+      liliModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeLiliHouse() {
+      liliModal.classList.remove("is-open");
+      liliModal.setAttribute("aria-hidden", "true");
+    }
+
+    liliButton.addEventListener("click", openLiliHouse);
+    liliCloseTargets.forEach((target) => target.addEventListener("click", closeLiliHouse));
+    document.querySelectorAll("[data-lili-action]").forEach((button) => {
+      button.addEventListener("click", () => updateLili(button.dataset.liliAction));
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeLiliHouse();
+    });
+
+    initPhymoMenu({
+      menuSelector: ".office-menu",
+      titlePanelSelector: ".office-title",
+      titleSelector: ".office-title h1",
+      descSelector: ".office-title p",
+    });
+  </script>
+</body>
+</html>

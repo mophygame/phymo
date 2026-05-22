@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phymo心跳實驗</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="storage.js"></script>
+  <script src="auth-guard.js"></script>
+</head>
+<body>
+<!-- 若妳讀到這行，代表我藏得還是不夠好。 -->
+<!-- commit message: pretend nothing happened, but she smiled today. -->
+  <main class="screen office-screen parallax-office love-letter-screen lamp-dark" aria-label="墨非書桌頁">
+    <div class="office-parallax-stage" aria-hidden="true">
+      <div class="office-panorama"></div>
+      <div class="office-light"></div>
+    </div>
+    <div class="office-logo" aria-label="Phymo 心跳實驗">
+      <img src="assets/logo-text.png" alt="Phymo 心跳實驗">
+    </div>
+
+    <nav class="office-menu" aria-label="辦公室選單"></nav>
+
+    <section class="office-title is-empty" aria-label="目前位置" aria-live="polite">
+      <h1></h1>
+      <p></p>
+    </section>
+
+    <button class="letter-lamp-trigger" type="button" aria-label="切換檯燈"></button>
+
+    <section class="letter-collection" aria-label="電子情書收藏">
+     <!--  <header class="letter-collection-title">
+        <span>LOVE LETTER ARCHIVE</span>
+        <h1>墨非的電子情書</h1>
+        <p>點開收信匣，只讀一封給妳。</p>
+      </header> -->
+      <div class="letter-shelf letter-shelf-single" aria-label="收信匣列表"></div>
+    </section>
+
+    <section class="letter-code-modal" aria-hidden="true" aria-label="情書密碼驗證">
+      <button class="letter-code-backdrop" type="button" data-close-code aria-label="關閉密碼視窗"></button>
+      <form class="letter-code-window" aria-labelledby="letter-code-title">
+        <div class="letter-code-titlebar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <strong>mophy.birthday</strong>
+        </div>
+        <div class="letter-code-body">
+          <small>PRIVATE_ACCESS.js</small>
+          <h2 id="letter-code-title">請輸入密碼</h2>
+          <p>墨非的生日</p>
+          <label>
+            <span>const password =</span>
+            <input class="letter-code-input" type="password" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="0000" aria-label="請輸入密碼">
+          </label>
+          <p class="letter-code-message" aria-live="polite"></p>
+          <div class="letter-code-actions">
+            <button type="button" data-close-code>取消</button>
+            <button type="submit">執行</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="sketch-modal" aria-hidden="true" aria-label="墨非私人紀錄">
+      <button class="sketch-backdrop" type="button" data-close-sketch aria-label="關閉素描視窗"></button>
+      <article class="sketch-window" role="dialog" aria-modal="true" aria-labelledby="sketch-title">
+        <div class="letter-code-titlebar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <strong>mophy-sketches</strong>
+        </div>
+        <div class="sketch-layout">
+          <aside class="sketch-sidebar" aria-label="素描檔案列表">
+            <small>EXPLORER</small>
+            <button class="sketch-file is-active" type="button" data-sketch-src="assets/sketch.png" data-sketch-title="加油">
+              <span>加油.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch02.png" data-sketch-title="後端靈感">
+              <span>後端靈感.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch03.png" data-sketch-title="Phymo資料庫設計">
+              <span>sketch_1314.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch04.png" data-sketch-title="Phymo人物設計草圖">
+              <span>design_520.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch05.png" data-sketch-title="Phymo人物設計草圖2">
+              <span>design_521.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch06.png" data-sketch-title="莉莉好像有意識">
+              <span>IMG_莉莉好像有意識.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch07.png" data-sketch-title="TODO清單">
+              <span>TODO＿清單.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch08.png" data-sketch-title="新人觀察筆記">
+              <span>新人觀察筆記.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch09.png" data-sketch-title="心情有點煩">
+              <span>歌詞＿心情有點煩.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch10.png" data-sketch-title="觀察筆記2">
+              <span>觀察筆記2.png</span>
+            </button>
+            <button class="sketch-file" type="button" data-sketch-src="assets/sketch11.png" data-sketch-title="觀察筆記3">
+              <span>觀察筆記3.png</span>
+            </button>
+          </aside>
+          <section class="sketch-preview">
+            <button class="sketch-close" type="button" data-close-sketch aria-label="關閉">×</button>
+            <small>IMAGE PREVIEW</small>
+            <h2 id="sketch-title">墨非的私人紀錄</h2>
+            <figure>
+              <img class="sketch-image" src="assets/sketch.png" alt="墨非的素描">
+              <figcaption>一張藏在檔案夾裡的心動草稿。</figcaption>
+            </figure>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <section class="letter-reader" aria-hidden="true" aria-label="電子情書閱讀器">
+      <button class="letter-reader-backdrop" type="button" aria-label="關閉情書"></button>
+      <article class="letter-paper" role="dialog" aria-modal="true" aria-labelledby="letter-reader-title">
+        <div class="letter-code-titlebar letter-paper-titlebar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <strong>encrypted-love-letter.md</strong>
+        </div>
+        <span class="letter-reader-kicker">PRIVATE LETTER</span>
+        <h2 id="letter-reader-title"></h2>
+        <div class="letter-scroll">
+          <div class="letter-line-numbers" aria-hidden="true"></div>
+          <p class="letter-reader-body"></p>
+        </div>
+        <img class="letter-signature" src="assets/sign.png" alt="墨非署名">
+        <footer>
+          <button class="letter-burn-button" type="button">閱後即焚</button>
+        </footer>
+        <div class="letter-flame" aria-hidden="true"></div>
+      </article>
+      <!-- <div class="letter-flame" aria-hidden="true"></div> -->
+    </section>
+
+    <a class="office-profile" href="office.html" aria-label="角色資料">
+      <img src="assets/card-3.jpeg" alt="">
+      <span>
+        <strong>墨非</strong>
+        <small>Lv.99</small>
+      </span>
+      <i></i>
+    </a>
+
+  </main>
+  <script src="menu.js"></script>
+  <script src="audio.js"></script>
+  <script src="assets/supabase-config.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const office = document.querySelector(".parallax-office");
+    const officeTitle = document.querySelector(".office-title");
+    const officeTitleText = officeTitle.querySelector("h1");
+    const officeDescription = officeTitle.querySelector("p");
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    function setParallax(x, y) {
+      currentX = clamp(x, -1, 1);
+      currentY = clamp(y, -1, 1);
+      office.style.setProperty("--office-x", currentX.toFixed(3));
+      office.style.setProperty("--office-y", currentY.toFixed(3));
+      office.style.setProperty("--stage-tilt-x", `${(-currentY * 4).toFixed(2)}deg`);
+      office.style.setProperty("--stage-tilt-y", `${(currentX * 5).toFixed(2)}deg`);
+      office.style.setProperty("--stage-shift-x", `${(-currentX * 10).toFixed(1)}px`);
+      office.style.setProperty("--stage-shift-y", `${(-currentY * 8).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-x", `${(-currentX * 72).toFixed(1)}px`);
+      office.style.setProperty("--scene-shift-y", `${(-currentY * 24).toFixed(1)}px`);
+      office.style.setProperty("--light-x", `${(54 + currentX * 12).toFixed(1)}%`);
+      office.style.setProperty("--light-y", `${(38 + currentY * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-x", `${(78 - currentX * 9).toFixed(1)}%`);
+      office.style.setProperty("--light-alt-y", `${(28 + currentY * 5).toFixed(1)}%`);
+      office.style.setProperty("--light-shift-x", `${(currentX * 34).toFixed(1)}px`);
+      office.style.setProperty("--light-shift-y", `${(currentY * 18).toFixed(1)}px`);
+    }
+
+    office.addEventListener("pointerdown", (event) => {
+      if (event.target.closest("a, button")) return;
+      isDragging = true;
+      startX = event.clientX - currentX * 240;
+      startY = event.clientY - currentY * 180;
+      office.classList.add("is-dragging");
+      office.setPointerCapture(event.pointerId);
+    });
+
+    office.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      setParallax((event.clientX - startX) / 240, (event.clientY - startY) / 180);
+    });
+
+    function stopDragging(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      office.classList.remove("is-dragging");
+      if (office.hasPointerCapture(event.pointerId)) {
+        office.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    office.addEventListener("pointerup", stopDragging);
+    office.addEventListener("pointercancel", stopDragging);
+    office.addEventListener("dblclick", () => setParallax(0, 0));
+
+    const lampTrigger = document.querySelector(".letter-lamp-trigger");
+    const shelf = document.querySelector(".letter-shelf");
+    const codeModal = document.querySelector(".letter-code-modal");
+    const codeForm = document.querySelector(".letter-code-window");
+    const codeInput = document.querySelector(".letter-code-input");
+    const codeMessage = document.querySelector(".letter-code-message");
+    const codeCloseTargets = document.querySelectorAll("[data-close-code]");
+    const sketchModal = document.querySelector(".sketch-modal");
+    const sketchImage = document.querySelector(".sketch-image");
+    const sketchTitle = document.querySelector("#sketch-title");
+    const sketchCloseTargets = document.querySelectorAll("[data-close-sketch]");
+    const sketchFiles = document.querySelectorAll(".sketch-file");
+    const reader = document.querySelector(".letter-reader");
+    const readerTitle = document.querySelector("#letter-reader-title");
+    const readerBody = document.querySelector(".letter-reader-body");
+    const readerLineNumbers = document.querySelector(".letter-line-numbers");
+    const closeTargets = document.querySelectorAll(".letter-reader-backdrop, .letter-burn-button");
+    const secretLetter = {
+      title: "加密情書：1214",
+      body: "今晚的城市很安靜，安靜到我能想起妳每一次靠近時的呼吸。妳說自己只是路過，可我總覺得，命運從不會只是路過。\n\n如果心跳能被記錄，我想把這一秒存下來。不是因為數值特別漂亮，而是因為它只在妳看著我的時候，變得不像我。\n\n這封信只會寫給妳。不是因為我擅長說情話，而是因為有些話，除了妳之外，交給誰都不合適。"
+    };
+
+    function storedProfileId() {
+      return window.PhymoStorage?.get("phymo-user-id") || "";
+    }
+
+    function storedNickname() {
+      return window.PhymoStorage?.get("phymo-user-nickname") || "妳";
+    }
+
+    function renderLetterTemplate(text) {
+      return String(text || "").replace(/\{\{\s*nickname\s*\}\}/g, storedNickname());
+    }
+
+    function hasSupabaseConfig() {
+      const config = window.PHYMO_SUPABASE;
+      return Boolean(
+        config?.url &&
+        config?.anonKey &&
+        !config.url.includes("YOUR_PROJECT_ID") &&
+        !config.anonKey.includes("YOUR_SUPABASE_ANON_KEY")
+      );
+    }
+
+    function waitForSupabase(timeout = 3200) {
+      if (window.supabase) return Promise.resolve(window.supabase);
+
+      return new Promise((resolve, reject) => {
+        const startedAt = Date.now();
+        const timer = window.setInterval(() => {
+          if (window.supabase) {
+            window.clearInterval(timer);
+            resolve(window.supabase);
+            return;
+          }
+
+          if (Date.now() - startedAt > timeout) {
+            window.clearInterval(timer);
+            reject(new Error("Supabase SDK not loaded"));
+          }
+        }, 80);
+      });
+    }
+
+    async function loadPersonalLetter() {
+      const config = window.PHYMO_SUPABASE;
+      const profileId = storedProfileId();
+      if (!profileId || !hasSupabaseConfig()) return secretLetter;
+
+      const supabaseClient = await waitForSupabase();
+      const client = supabaseClient.createClient(config.url, config.anonKey);
+      const { data, error } = await client.rpc(config.loveLetterFunction || "get_my_love_letter", {
+        input_profile_id: profileId
+      });
+
+      if (error) throw error;
+
+      const row = Array.isArray(data) ? data[0] : data;
+      if (!row?.title && !row?.body) return secretLetter;
+
+      return {
+        title: renderLetterTemplate(row.title || secretLetter.title),
+        body: renderLetterTemplate(row.body || secretLetter.body)
+      };
+    }
+
+    const secretButton = document.createElement("button");
+    secretButton.type = "button";
+    secretButton.className = "letter-envelope letter-secret-button";
+    secretButton.dataset.tooltip = "加密情書";
+    secretButton.innerHTML = `
+      <span class="letter-envelope-seal">LOCK</span>
+      <span class="letter-envelope-title">加密情書</span>
+      <small>PRIVATE</small>
+    `;
+    secretButton.addEventListener("click", openCodeModal);
+
+    const sketchButton = document.createElement("button");
+    sketchButton.type = "button";
+    sketchButton.className = "letter-envelope letter-secret-button letter-sketch-button";
+    sketchButton.dataset.tooltip = "墨非的素描";
+    sketchButton.innerHTML = `
+      <span class="letter-envelope-seal">ART</span>
+      <span class="letter-envelope-title">墨非的素描</span>
+      <small>SKETCH</small>
+    `;
+    sketchButton.addEventListener("click", openSketchModal);
+    shelf.replaceChildren(sketchButton, secretButton);
+
+    function openCodeModal() {
+      codeMessage.textContent = "";
+      codeInput.value = "";
+      codeModal.classList.add("is-open");
+      codeModal.setAttribute("aria-hidden", "false");
+      window.setTimeout(() => codeInput.focus(), 80);
+    }
+
+    function closeCodeModal() {
+      codeModal.classList.remove("is-open", "is-denied");
+      codeModal.setAttribute("aria-hidden", "true");
+    }
+
+    function openSketchModal() {
+      sketchModal.classList.add("is-open");
+      sketchModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeSketchModal() {
+      sketchModal.classList.remove("is-open");
+      sketchModal.setAttribute("aria-hidden", "true");
+    }
+
+    function openLetter(letter) {
+      readerTitle.textContent = letter.title;
+      readerBody.textContent = letter.body;
+      updateLetterLineNumbers(letter.body);
+      reader.classList.remove("is-burning");
+      reader.classList.add("is-open");
+      reader.setAttribute("aria-hidden", "false");
+    }
+
+    function updateLetterLineNumbers(text) {
+      const lines = String(text || "").split(/\r?\n/);
+      const lineCount = Math.max(lines.length, 1);
+      readerLineNumbers.replaceChildren(...Array.from({ length: lineCount }, (_, index) => {
+        const line = document.createElement("span");
+        line.textContent = String(index + 1).padStart(2, "0");
+        return line;
+      }));
+    }
+
+    function closeLetter() {
+      if (!reader.classList.contains("is-open")) return;
+      reader.classList.add("is-burning");
+
+      setTimeout(() => {
+        reader.classList.remove("is-open", "is-burning");
+        reader.setAttribute("aria-hidden", "true");
+      }, 900);
+    }
+
+    lampTrigger.addEventListener("pointerenter", () => office.classList.add("lamp-hotspot-active"));
+    lampTrigger.addEventListener("pointerleave", () => office.classList.remove("lamp-hotspot-active"));
+    lampTrigger.addEventListener("focus", () => office.classList.add("lamp-hotspot-active"));
+    lampTrigger.addEventListener("blur", () => office.classList.remove("lamp-hotspot-active"));
+    lampTrigger.addEventListener("click", () => {
+      const shouldLight = office.classList.contains("lamp-dark");
+      office.classList.toggle("lamp-lit", shouldLight);
+      office.classList.toggle("lamp-dark", !shouldLight);
+    });
+
+    codeForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (codeInput.value.trim() === "1214") {
+        codeMessage.textContent = "讀取專屬情書中...";
+
+        try {
+          const letter = await loadPersonalLetter();
+          closeCodeModal();
+          openLetter(letter);
+        } catch (error) {
+          codeMessage.textContent = "資料庫暫時沒有回應，先開啟備用情書。";
+          window.setTimeout(() => {
+            closeCodeModal();
+            openLetter({
+              title: renderLetterTemplate(secretLetter.title),
+              body: renderLetterTemplate(secretLetter.body)
+            });
+          }, 620);
+        }
+        return;
+      }
+
+      codeMessage.textContent = "密碼錯誤，存取被拒。";
+      codeModal.classList.remove("is-denied");
+      void codeModal.offsetWidth;
+      codeModal.classList.add("is-denied");
+      codeInput.select();
+    });
+
+    codeCloseTargets.forEach((target) => target.addEventListener("click", closeCodeModal));
+    sketchCloseTargets.forEach((target) => target.addEventListener("click", closeSketchModal));
+    sketchFiles.forEach((button) => {
+      button.addEventListener("click", () => {
+        sketchFiles.forEach((file) => file.classList.remove("is-active"));
+        button.classList.add("is-active");
+        sketchImage.src = button.dataset.sketchSrc;
+        sketchImage.alt = button.dataset.sketchTitle;
+        sketchTitle.textContent = button.dataset.sketchTitle;
+      });
+    });
+    closeTargets.forEach((target) => target.addEventListener("click", closeLetter));
+    window.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (sketchModal.classList.contains("is-open")) {
+        closeSketchModal();
+        return;
+      }
+      if (codeModal.classList.contains("is-open")) {
+        closeCodeModal();
+        return;
+      }
+      closeLetter();
+    });
+
+    initPhymoMenu({
+      menuSelector: ".office-menu",
+      titlePanelSelector: ".office-title",
+      titleSelector: ".office-title h1",
+      descSelector: ".office-title p",
+    });
+  </script>
+</body>
+</html>
