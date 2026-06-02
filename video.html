@@ -99,10 +99,10 @@
       <div class="clue-board">
         <div class="clue-puzzle" aria-label="合照拼圖"></div>
         <aside class="clue-note">
-          <strong>公司大合照</strong>
-          <p>在不同地點找到碎片，收集後會自動放回拼圖板。</p>
+          <strong>密碼 🔑</strong>
+          <p>在不同地點找到碎片，收集後會自動放回拼圖板，蒐集完成可以獲得手機密碼。</p>
           <span class="clue-progress">0 / 20</span>
-          <code class="clue-password" hidden>PHYMO-MOFEI-1214-LOVE</code>
+          <code class="clue-password" hidden>PHYMO-HEART404</code>
         </aside>
       </div>
     </div>
@@ -149,7 +149,7 @@
               <span>Lacuna</span>
             </button>
             <button type="button" data-video-type="youtube" data-youtube-src="https://www.youtube.com/embed/vJlMSHuxUFg?rel=0&playsinline=1" data-video-title="Phymo">
-              <img src="assets/video_posters/phymp.webp" alt="">
+              <img src="assets/video_posters/phymo.webp" alt="">
               <span>Phymo</span>
             </button>
           </aside>
@@ -186,141 +186,264 @@
     const locations = [
       {
         id: "hall",
-        name: "辦公大廳",
+        name: "好事成雙水族大廳",
         desc: "水族箱映著晨光，新的企劃似乎正在悄悄發芽。",
         image: "assets/office/hall.webp",
         character: "assets/character/mophy-normal.png",
-        fragments: [0, 1, 2],
+        fragments: [0, 1],
         lines: [
           "妳來了。今天想從哪裡開始探索？我陪妳。",
-          "這裡是大家每天擦肩而過的地方，所以也最容易藏著意外的線索。"
+          "這裡是大家每天擦肩而過的地方，所以也最容易藏著意外的線索。",
+          "水族箱的光落在妳肩上，像把早晨也變得溫柔一點。",
+          "如果有什麼不安，就先放在入口吧，等回來時我替妳拿。",
+          "大廳看起來很公開，但越公開的地方，越適合藏小秘密。",
+          "妳剛才停下來的那一秒，我差點以為妳也聽見心跳聲。",
+          "每個人都從這裡開始一天，只有妳讓這裡像故事開場。",
+          "別急著選路，好的線索有時會自己靠近妳。",
+          "我已經把今天的地圖記好了，妳只要牽著我的節奏走。",
+          "如果迷路了也沒關係，我會在妳抬頭能看見的地方。"
         ]
       },
       {
         id: "department",
-        name: "開發部門",
+        name: "遊戲開發部門",
         desc: "螢幕上的程式碼還亮著，有人剛剛離開座位。",
         image: "assets/office/department.webp",
         character: "assets/character/mophy-shy.png",
-        fragments: [3, 4, 5],
+        fragments: [2, 3],
         lines: [
           "這裡有很多未完成的分支，也有很多不能說出口的心事。",
-          "如果妳看到奇怪的註解，不准笑。那可能是我昨晚留下的。"
-        ]
-      },
-      {
-        id: "motionroom",
-        name: "動態捕捉室",
-        desc: "白板上留下了幾個被圈起來的名字。",
-        image: "assets/office/motionroom.webp",
-        character: "assets/character/mophy-smile2.png",
-        fragments: [6, 7, 8],
-        lines: [
-          "會議室不只討論進度，也討論那些沒人敢承認的偏心。",
-          "坐近一點，我把下一段劇情只講給妳聽。"
-        ]
-      },
-      {
-        id: "restroom",
-        name: "休息區",
-        desc: "沙發和咖啡香讓時間慢了一拍。",
-        image: "assets/office/restroom.webp",
-        character: "assets/character/mophy-comfort2.png",
-        fragments: [9, 10],
-        lines: [
-          "累了就先在這裡休息。探索不是趕路，是一起停下來看見什麼。",
-          "如果妳願意，我可以把今天的第一杯咖啡讓給妳。"
-        ]
-      },
-      {
-        id: "treasurehouse",
-        name: "典藏室",
-        desc: "相簿、卡片和未公開素材都收在這裡。",
-        image: "assets/office/treasurehouse.webp",
-        character: "assets/character/mophy-smile.png",
-        fragments: [11, 12, 13],
-        lines: [
-          "這裡的每張素外都有一個版本號，也有一個不想被刪掉的瞬間。",
-          "妳想先看影片，還是照片？"
+          "如果妳看到奇怪的註解，不准笑。那可能是我昨晚留下的。",
+          "螢幕太亮了，反而讓人更容易看見誰在走神。",
+          "我把妳的名字打進測試資料裡，結果所有錯誤都變得不太討厭。",
+          "這一行程式還沒完成，就像有些話，我還在找正確語法。",
+          "妳靠近時，我的注意力比伺服器還容易過載。",
+          "別碰那個鍵，除非妳想看我慌張到忘記註解。",
+          "這裡每個人都說自己很理性，但桌上的便利貼全都出賣了他們。",
+          "如果今天只能修一個 bug，我希望是妳皺眉的原因。",
+          "我可以替妳開權限，但妳要答應先看我一眼。"
         ]
       },
       {
         id: "conferenceroom",
         name: "會議室",
-        desc: "開會討論新點子專屬空間。",
+        desc: "投影幕還留著微光，像某個尚未被通過的心動提案。",
         image: "assets/office/conferenceroom.webp",
         character: "assets/character/mophy-normal.png",
-        fragments: [14, 15],
+        fragments: [4, 5],
         lines: [
-         "投影幕的微光落在桌面上，像某個還沒被說出口的答案。",
-         "散落的筆記暫時留在原處，也許下一次翻開時，故事會多出新的頁數。",
-         "會議室安靜得只剩時鐘聲，彷彿連空氣都在等待下一個決定。"
+          "這裡不只討論進度，也討論那些沒人敢承認的偏心。",
+          "坐近一點，我把下一段企劃只講給妳聽。",
+          "投影幕關掉以後，真正重要的話才會留下來。",
+          "每張椅子都很安靜，只有妳坐過的位置像被標記了。",
+          "會議紀錄可以刪改，但我看向妳的次數很難假裝不存在。",
+          "如果這是提案，我大概會把妳寫進所有優先項。",
+          "妳剛剛點頭的樣子，比任何通過決議都讓人安心。",
+          "這裡適合做決定，也適合偷偷推翻那些太冷靜的決定。",
+          "我想把燈調暗一點，這樣妳就不會發現我看妳太久。",
+          "別擔心，我站在妳這邊，連會議室的白板都知道。"
         ]
       },
-       {
-        id: "aquarium",
-        name: "水族室",
-        desc: "這裡是人魚雙雙的專屬空間。",
-        image: "assets/office/treasurehouse.webp",
-        character: "assets/character/mophy-heartbeat.png",
-        fragments: [16,17 ],
+      {
+        id: "motionroom",
+        name: "動態捕捉室",
+        desc: "白板上留下了幾個被圈起來的名字，像一場即將開始的排練。",
+        image: "assets/office/motionroom.webp",
+        character: "assets/character/mophy-smile2.png",
+        fragments: [6, 7],
         lines: [
-          "水面有一點反光，像被誰小心藏起來的照片角落。",
-          "找到的碎片先收好，拼起來也許會看見另一段日常。"
+          "每一次動作捕捉，都像把心跳也偷偷記錄進資料裡。",
+          "妳看，螢幕上的路徑不是亂的，它只是比我們先承認了靠近。",
+          "這裡會記下所有細微動作，包括我轉頭看妳的那一瞬間。",
+          "如果把心動做成動畫，第一幀大概就是妳走進來。",
+          "妳別笑，我真的有認真研究怎麼自然地靠近妳。",
+          "白板上的圈圈不是重點，重點是妳剛剛站的位置。",
+          "這裡很適合排練，但有些反應我沒有辦法演出來。",
+          "每個捕捉點都很誠實，誠實到讓人有點不好意思。",
+          "妳的步伐很輕，可是系統還是記住了。",
+          "如果等等要重來一次，我希望妳還是走向我。"
+        ]
+      },
+      {
+        id: "machineroom",
+        name: "綠色守護伺服器機房",
+        desc: "伺服器低聲運轉，像替誰守著一段不眠的秘密。",
+        image: "assets/office/machineroom.webp",
+        character: "assets/character/mophy-serious.png",
+        fragments: [8, 9],
+        lines: [
+          "這裡的聲音很吵，但只要妳開口，我還是聽得見。",
+          "有些資料被加密，不是因為危險，是因為太珍貴。",
+          "機房溫度很低，所以妳靠近一點也合理。",
+          "燈號一閃一閃的，像在替誰保守秘密。",
+          "這裡不適合久待，但我想多陪妳一分鐘。",
+          "妳聽見的不是雜訊，是很多人努力讓明天正常運轉。",
+          "如果心事也能備份，我會替妳存三份。",
+          "別怕黑，我已經把出口記好了，也記得妳的方向。",
+          "伺服器很固執，但我比它更固執地想守住妳。",
+          "密碼可以重設，有些信任卻只能慢慢累積。"
+        ]
+      },
+      {
+        id: "backendlead",
+        name: "首席專屬辦公室",
+        desc: "桌面整齊得近乎克制，只有一封未寄出的信露出角落。",
+        image: "assets/office/backendlead.webp",
+        character: "assets/character/mophy-serious.png",
+        fragments: [10, 11],
+        lines: [
+          "系統穩定運行中，偶爾也會替某些未命名的想法保留埠口。",
+          "這裡存放著無數人的故事，只是有些紀錄，被設定成僅限特定權限查看。",
+          "首席的桌面看起來冷靜，抽屜裡卻可能藏著最柔軟的東西。",
+          "妳不要亂翻，除非妳已經準備好知道我在乎什麼。",
+          "這個位置視野很好，剛好能看見妳經過的方向。",
+          "他們說首席很難接近，但妳好像是例外。",
+          "有些規則寫得很嚴格，只是為了等某個人來打破。",
+          "如果這裡有最高權限，我希望它能批准我多陪妳一會兒。",
+          "桌上那封信還沒寄出，因為收件人正在我面前。",
+          "妳站在這裡時，整間辦公室都像安靜了一點。"
+        ]
+      },
+      {
+        id: "corridor",
+        name: "辦公走廊",
+        desc: "走廊盡頭的燈一明一暗，像在提示下一個選項。",
+        image: "assets/office/corridor.webp",
+        character: "assets/character/mophy-tease.png",
+        fragments: [12, 13],
+        lines: [
+          "妳走在前面也可以，我會在妳回頭時剛好出現。",
+          "這條路每天都有人經過，但今天它像是只替妳留了入口。",
+          "走廊的燈有點慢半拍，像在替我們延長時間。",
+          "如果妳停下來，我會假裝只是剛好也想停。",
+          "有些門關著，不代表不能靠近，只是需要對的人開啟。",
+          "妳的腳步聲很好認，我不用回頭也知道是妳。",
+          "這裡很長，但跟妳一起走，好像一下就到了。",
+          "我不太擅長偶遇，所以每次都提前等在路口。",
+          "下一個轉角可能有線索，也可能只有我想見妳。",
+          "如果故事有分岔，我希望每條路最後都能遇到妳。"
+        ]
+      },
+      {
+        id: "ceiling",
+        name: "天花板視角",
+        desc: "換個角度看辦公室，所有座位都像一張未完成的關係圖。",
+        image: "assets/office/ceiling.webp",
+        character: "assets/character/mophy-heartbeat.png",
+        fragments: [14, 15],
+        lines: [
+          "從上面看，距離好像變短了，連那些猶豫也沒那麼難懂。",
+          "妳發現了嗎？有些線索不是藏起來，只是需要換個角度。",
+          "平常看不見的動線，從這裡反而變得很清楚。",
+          "如果把心動畫成地圖，妳的位置一定在中心。",
+          "這個角度有點犯規，連我偷偷等妳都藏不住。",
+          "所有座位都像星點，只有妳那一格特別亮。",
+          "妳看，辦公室其實沒有那麼複雜，只是大家都不敢說真話。",
+          "從高處看下去，秘密也像被整理成了線索。",
+          "我想把這一刻存下來，當作今天的俯瞰圖。",
+          "如果妳願意，我們可以從新的角度重新開始。"
+        ]
+      },
+      {
+        id: "restroom",
+        name: "靈魂迴廊休息區",
+        desc: "沙發和咖啡香讓時間慢了一拍。",
+        image: "assets/office/restroom.webp",
+        character: "assets/character/mophy-comfort2.png",
+        fragments: [16, 17],
+        lines: [
+          "累了就先在這裡休息。探索不是趕路，是一起停下來看見什麼。",
+          "如果妳願意，我可以把今天的第一杯咖啡讓給妳。",
+          "沙發有點軟，適合把防備也暫時放下。",
+          "妳不用一直很努力，在我面前偷懶也可以。",
+          "這裡的時間比較慢，剛好夠我多看妳幾眼。",
+          "咖啡香會散掉，但妳剛剛笑的樣子不會。",
+          "如果今天太累，就把剩下的地圖交給我。",
+          "我不會催妳，因為等妳本來就是我擅長的事。",
+          "妳靠近的時候，休息區好像真的變得安靜了。",
+          "要不要休息一下？我可以坐在旁邊，不打擾，只陪妳。"
         ]
       },
       {
         id: "bar",
-        name: "茶水吧台",
+        name: "續命茶水間",
         desc: "杯緣還留著溫度，像有人剛把話吞回去。",
         image: "assets/office/bar.webp",
         character: "assets/character/mophy-normal.png",
         fragments: [18, 19],
         lines: [
           "我原本只是來倒水，結果想到妳可能會經過，就多留了一會兒。",
-          "這句話聽起來不像偶然？嗯，妳可以這麼理解。"
+          "這句話聽起來不像偶然？嗯，妳可以這麼理解。",
+          "茶水吧台很適合假裝偶遇，也很適合真的想見妳。",
+          "杯子是熱的，證明我才剛到，也證明我沒有等太久。",
+          "妳想喝什麼？我記得妳上次選了比較甜的那個。",
+          "如果糖包不夠，我可以把我的那份也給妳。",
+          "這裡的玻璃會反光，所以我偷看妳很容易被發現。",
+          "有些話像熱水，放久了就涼了，所以我想早點說。",
+          "妳不用急著回答，我只是想讓妳知道。",
+          "下一次倒水，我大概還是會走這條比較遠的路。"
         ]
       },
       {
-        id: "backendlead",
-        name: "首席專屬辦公室",
-        desc: "首席的",
-        image: "assets/office/backendlead.webp",
-        character: "assets/character/mophy-normal.png",
-        fragments: [18, 19],
+        id: "treasurehouse",
+        name: "暗黑寶庫",
+        desc: "相簿、卡片和未公開素材都收在這裡。",
+        image: "assets/office/treasurehouse.webp",
+        character: "assets/character/mophy-smile.png",
+        fragments: [20, 21],
         lines: [
-          "系統穩定運行中，偶爾也會替某些未命名的想法保留埠口。",
-          "封包持續穿越無數節點，而答案或許就在下一次請求之後。",
-          "這裡存放著無數人的故事，只是有些紀錄，被設定成僅限特定權限查看。"
+          "這裡的每張照片都有一個版本號，也有一個不想被刪掉的瞬間。",
+          "妳想先看影片，還是照片？我都替妳留好了。",
+          "典藏室裡最重要的不是物品，是它們被誰記得。",
+          "有些素材不公開，不是因為不夠好，是因為太私人。",
+          "妳拿起那張卡的時候，我突然有點想知道妳會怎麼收藏我。",
+          "這裡每一格都像時間膠囊，封著我們還沒說完的話。",
+          "別急著翻到最後，最好的回憶通常藏在中間頁。",
+          "我把線索放得不算太難，因為我想讓妳找到。",
+          "如果哪張照片讓妳停住，那它就是今天的答案。",
+          "等妳收集完，我們就能拼出那張真正的大合照。"
         ]
       },
       {
         id: "boytoilet",
-        name: "男廁所",
-        desc: "首席的",
+        name: "哲學思考洗手間(男)",
+        desc: "鏡面反射著乾淨燈光，像把所有表情都暫時收好。",
         image: "assets/office/boytoilet.webp",
         character: "assets/character/mophy-shy.png",
-        fragments: [18, 19],
+        fragments: [22, 23],
         lines: [
-         "有人把領帶重新整理好，像把情緒也一起藏回平靜之下。",
-        "鏡面誠實映照每個表情，卻不會向任何人透露秘密。",
-        "短暫停留的片刻，也許比會議室裡更接近真心。"
+          "有人把領帶重新整理好，像把情緒也一起藏回平靜之下。",
+          "短暫停留的片刻，也許比會議室裡更接近真心。",
+          "鏡面很誠實，所以我不太敢在這裡想妳。",
+          "燈光太亮了，連一點慌張都藏不住。",
+          "如果有人在這裡深呼吸，可能只是剛剛遇見了重要的人。",
+          "水聲會蓋住很多話，但蓋不住心跳。",
+          "我只是確認一下狀態，結果腦子裡還是妳。",
+          "這個地方不適合久聊，但適合把情緒整理好再見妳。",
+          "妳不要突然出現，我會真的不知道該把手放哪裡。",
+          "走吧，再待下去，我可能會被鏡子出賣。"
         ]
       },
       {
         id: "girltoilet",
-        name: "女廁所",
-        desc: "首席禁止進入的秘密聖地",
+        name: "哲學思考洗手間(女)",
+        desc: "柔和燈光照著鏡台，像替每個秘密留了一點餘地。",
         image: "assets/office/girltoilet.webp",
         character: "assets/character/mophy-shy.png",
-        fragments: [18, 19],
+        fragments: [24, 25],
         lines: [
           "要補妝嗎？畢竟下一個轉角可能遇見重要的人。",
-          "燈光很溫柔，適合偷偷檢查今天的狀態。",
-          "裡面似乎有人，還是稍後再來吧。"
+          "裡面似乎有人，還是稍後再來吧。",
+          "這裡的燈很柔，像特地替秘密調低了音量。",
+          "我不該靠太近，所以我會在門外等妳。",
+          "妳不用急，重要的人本來就值得被等待。",
+          "鏡子會記得妳今天的樣子，我也會。",
+          "如果需要整理心情，我可以把走廊留給妳。",
+          "有些地方我不能進去，但我可以守在出口。",
+          "妳出來時如果看見我，別驚訝，我只是剛好沒有離開。",
+          "今天的妳很好看，這句話不需要等到下一個場景。"
         ]
-      },
-
+      }
     ];
 
     const sceneImage = document.querySelector(".scene-image");
@@ -382,10 +505,13 @@
     ];
     let activeLocation = locations[0];
     let dialogueIndex = 0;
+    let activeDialogueLines = [];
     const collectedFragments = new Set();
     const fragmentPositions = new Map();
-    const puzzleTotal = 20;
-    const puzzleImage = "assets/companyphoto/04.webp";
+    const puzzleTotal = 26;
+    const puzzleCols = 7;
+    const puzzleRows = 4;
+    const puzzleImage = "assets/icons/pixelate.webp";
     const videoPassword = "PHYMO-HEART404";
     let videoUnlocked = false;
     let bgMusicEnabled = true;
@@ -468,8 +594,10 @@
         const piece = document.createElement("span");
         const isCollected = collectedFragments.has(index);
         piece.className = `clue-piece${isCollected ? " is-collected" : ""}`;
-        piece.style.setProperty("--piece-x", index % 6);
-        piece.style.setProperty("--piece-y", Math.floor(index / 6));
+        const pieceX = index % puzzleCols;
+        const pieceY = Math.floor(index / puzzleCols);
+        piece.style.setProperty("--pos-x", `${pieceX === 0 ? 0 : (pieceX / (puzzleCols - 1)) * 100}%`);
+        piece.style.setProperty("--pos-y", `${pieceY === 0 ? 0 : (pieceY / (puzzleRows - 1)) * 100}%`);
         piece.style.backgroundImage = `url("${puzzleImage}")`;
         piece.textContent = isCollected ? "" : String(index + 1).padStart(2, "0");
         cluePuzzle.append(piece);
@@ -499,10 +627,17 @@
       renderClues();
     }
 
+    function pickRandomLines(lines, count = 3) {
+      return [...lines]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, Math.min(count, lines.length));
+    }
+
     function activateLocation(id) {
       const location = locations.find((item) => item.id === id) || locations[0];
       activeLocation = location;
       dialogueIndex = 0;
+      activeDialogueLines = pickRandomLines(location.lines, 3);
       sceneImage.classList.add("is-changing");
       window.setTimeout(() => {
         sceneImage.src = location.image;
@@ -512,14 +647,14 @@
       locationTitle.textContent = location.name;
       locationDesc.textContent = location.desc;
       characterImage.src = location.character;
-      dialogueText.textContent = location.lines[0];
+      dialogueText.textContent = activeDialogueLines[0];
       renderFragments();
       renderLocationSelect();
     }
 
     dialogueNext.addEventListener("click", () => {
-      dialogueIndex = (dialogueIndex + 1) % activeLocation.lines.length;
-      dialogueText.textContent = activeLocation.lines[dialogueIndex];
+      dialogueIndex = (dialogueIndex + 1) % activeDialogueLines.length;
+      dialogueText.textContent = activeDialogueLines[dialogueIndex];
     });
 
     document.querySelectorAll(".bag-button, .map-square-button, .clue-square-button").forEach((button) => {
