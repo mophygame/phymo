@@ -136,7 +136,7 @@
             <video class="bag-video-player" controls poster="assets/video_posters/video1.webp">
               <source src="assets/video/video1.mp4" type="video/mp4">
             </video>
-            <iframe class="bag-youtube-player"  src="https://www.youtube.com/embed/jsFQvMvirtU" title="Phymo #aivideo #aimusic  #朋友之間做好玩的" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe class="bag-youtube-player"  src="https://www.youtube.com/embed/oQpA-3m9Q7o" title="Lacuna" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </section>
           <aside class="bag-video-list" aria-label="影片選單">
             <small>VIDEO MENU</small>
@@ -144,7 +144,7 @@
               <img src="assets/video_posters/video1.webp" alt="">
               <span>小破群開發日常</span>
             </button>
-            <button type="button" data-video-type="local" data-video-src="assets/video/Lacuna.mp4" data-video-poster="assets/video_posters/01.webp" data-video-title="Lacuna">
+            <button type="button" data-video-type="youtube" data-youtube-src="https://www.youtube.com/embed/oQpA-3m9Q7o?rel=0&playsinline=1" data-video-title="Lacuna">
               <img src="assets/video_posters/Lacuna.webp" alt="">
               <span>Lacuna</span>
             </button>
@@ -327,7 +327,7 @@
       {
         id: "ceiling",
         name: "天花板視角",
-        desc: "換個角度看辦公室，所有座位都像一張未完成的關係圖。",
+        desc: "換個角度看大廳，所有區域都像一張未完成的關係圖。",
         image: "assets/office/ceiling.webp",
         character: "assets/character/mophy-heartbeat.png",
         fragments: [14, 15],
@@ -483,8 +483,8 @@
       { title: "公司連拍4", src: "assets/companyphoto/09.webp" },
       { title: "刺激的過山車紀念照", src: "assets/companyphoto/14.webp" },
       { title: "刺激的過山車紀念照", src: "assets/companyphoto/15.webp" },
-      { title: "公司合照 06", src: "assets/companyphoto/06.png" },
-      { title: "公司合照 13", src: "assets/companyphoto/13.webp" },
+      // { title: "公司合照 06", src: "assets/companyphoto/06.png" },
+      // { title: "公司合照 13", src: "assets/companyphoto/13.webp" },
       { title: "宵夜採購團🌔", src: "assets/companyphoto/16.webp" },
       { title: "宵夜採購團🌔", src: "assets/companyphoto/17.webp" },
       { title: "偷拍兩位男神(灬ºωº灬)", src: "assets/companyphoto/18.webp" },
@@ -578,12 +578,13 @@
       for (let attempt = 0; attempt < 40; attempt += 1) {
         position = {
           x: 10 + Math.random() * 80,
-          y: 18 + Math.random() * 58
+          y: 18 + Math.random() * 54
         };
 
         const overlapsLocationCard = position.x < 35 && position.y < 45;
         const overlapsTopButtons = position.x > 55 && position.y < 32;
-        if (!overlapsLocationCard && !overlapsTopButtons) return position;
+        const overlapsDialogue = position.x > 22 && position.x < 78 && position.y > 62;
+        if (!overlapsLocationCard && !overlapsTopButtons && !overlapsDialogue) return position;
       }
       return position;
     }
@@ -776,9 +777,19 @@
         button.dataset.photoSrc = photo.src;
         button.dataset.photoCaption = photo.title;
         button.innerHTML = `
+          <span class="photo-loading">Loading</span>
           <img src="${photo.src}" alt="${photo.title}" loading="lazy">
           <span>${photo.title}</span>
         `;
+        const image = button.querySelector("img");
+        image.addEventListener("load", () => button.classList.add("is-loaded"));
+        image.addEventListener("error", () => {
+          button.classList.add("is-error");
+          button.querySelector(".photo-loading").textContent = "載入失敗";
+        });
+        if (image.complete && image.naturalWidth > 0) {
+          button.classList.add("is-loaded");
+        }
         photoGrid.append(button);
       });
     }
