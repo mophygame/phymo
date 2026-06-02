@@ -4,374 +4,702 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Phymo心跳實驗</title>
-  <link rel="preload" as="image" href="assets/page-video.webp">
+  <link rel="preload" as="image" href="assets/office/hall.webp">
+  <link rel="preload" as="image" href="assets/character-mophy.png">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="video.css">
 </head>
 <body>
-  <main class="live-app" aria-label="小破群開發中直播介面">
-    <header class="live-header">
+  <main class="otome-map" aria-label="Phymo 辦公室探索遊戲">
+    <header class="map-hud">
       <div class="brand">
         <h1>小破群開發中<span>.exe</span></h1>
-        <p>— Phymo辦公室的小小日常 —</p>
       </div>
-      <div class="stream-meta">
-        <strong>LIVE</strong>
-        <span>♟ 8,520</span>
-      </div>
-      <section class="viewer-status" aria-label="玩家資訊">
-        <span class="hearts">♡♡</span>
-        <div>
-          <small>粉絲等級 Lv.99</small>
-          <i><b></b></i>
-        </div>
-        <small>2350/5000</small>
-        <button type="button">應援福利</button>
+      <section class="hud-bag-actions" aria-label="背包功能">
+        <button class="bag-button" type="button" data-bag="video">
+          <span><img src="assets/icons/phone.webp" alt="" loading="lazy"></span>
+          <strong>手機影片</strong>
+        </button>
+        <button class="bag-button" type="button" data-bag="photo">
+          <span><img src="assets/icons/board.webp" alt="" loading="lazy"></span>
+          <strong>佈告欄</strong>
+        </button>
       </section>
-      <nav class="header-actions" aria-label="快捷功能">
-        <button type="button">♧<small>公告</small></button>
-        <button type="button">⚙<small>設定</small></button>
-        <button type="button" class="has-new">✉<small>信件</small></button>
-        <button type="button">♙<small>背包</small></button>
-        <button type="button">▣<small>存檔</small></button>
-        <a href="index.html">↪<small>結束</small></a>
+      <nav class="hud-actions" aria-label="快捷功能">
+        <button class="music-toggle" type="button" aria-pressed="false">音樂繼續</button>
+        <a href="index.html">結束</a>
       </nav>
     </header>
 
-    <div class="dashboard">
-      <section class="media-column">
-        <section class="panel featured-panel">
-          <header class="panel-head">
-            <h2>✦ 最新影片</h2>
-            <span class="feature-tag">小破群開發日常 #12</span>
-          </header>
-          <div class="featured-content">
-            <aside class="video-shelf-column" aria-label="影片列表">
-              <header class="video-shelf-title">
-                <h3>影片列表</h3>
-                <button type="button">全部 ›</button>
-              </header>
-              <div class="video-shelf">
-                <button class="clip is-active" type="button" data-video="assets/video/video1.mp4" data-poster="assets/video_posters/video1.webp" data-title="小破群開發日常" data-subtitle="video1">
-                  <img src="assets/video_posters/video1.webp" alt="" loading="lazy" decoding="async"><b>NEW</b><span>Phymo<br>小破群開發日常</span>
-                </button>
-              </div>
-            </aside>
-            <figure class="featured-player">
-              <video class="featured-video" poster="assets/video_posters/video1.webp" preload="metadata">
-                <source src="assets/video/video1.mp4" type="video/mp4">
-              </video>
-              <figcaption>
-                <strong>小破群開發日常</strong>
-                <em>Phymo</em>
-              </figcaption>
-              <div class="featured-controls">
-                <div class="featured-progress"><i></i></div>
-                <button class="feature-play" type="button" aria-label="播放或暫停">▶</button>
-                <button class="feature-restart" type="button" aria-label="重新播放">↺</button>
-                <span class="feature-time">00:00 / 00:00</span>
-                <button class="feature-mute" type="button" aria-label="靜音或恢復音量">♬</button>
-                <span>1080P</span>
-                <button class="feature-fullscreen" type="button" aria-label="全螢幕">⛶</button>
-              </div>
-            </figure>
-          </div>
-        </section>
-      </section>
+    <section class="map-stage" aria-label="探索地圖">
+      <div class="scene-layer" aria-live="polite">
+        <img class="scene-image" src="assets/office/hall.webp" alt="辦公大廳">
+        <span class="scene-glow" aria-hidden="true"></span>
+      </div>
 
-      <section class="panel photo-wall" aria-label="公司合照展覽牆">
-        <header class="panel-head">
-          <h2>✦ 公司合照展覽牆</h2>
-          <span>OUR MOMENTS</span>
-        </header>
-        <div class="photo-carousel">
-          <div class="photo-viewer">
-            <button class="photo-arrow photo-prev" type="button" aria-label="上一張合照">‹</button>
-            <button class="photo-featured" type="button" aria-label="放大檢視目前合照">
-              <img src="assets/companyphoto/01.webp" alt="水族館企劃合照" decoding="async">
-              <span><strong>深藍企劃日</strong><small>點擊放大檢視</small></span>
-            </button>
-            <button class="photo-arrow photo-next" type="button" aria-label="下一張合照">›</button>
-          </div>
-          <div class="photo-footer">
-            <div class="photo-thumbs" aria-label="合照選單">
-              <button class="is-active" type="button" data-photo-src="assets/companyphoto/01.webp" data-photo-alt="水族館企劃合照" data-photo-caption="深藍企劃日" aria-label="顯示深藍企劃日">
-                <img src="assets/companyphoto/01.webp" alt="" decoding="async">
-              </button>
-              <button type="button" data-photo-src="assets/companyphoto/02.webp" data-photo-alt="團隊水族館合照" data-photo-caption="全員集合" aria-label="顯示全員集合">
-                <img src="assets/companyphoto/02.webp" alt="" loading="lazy" decoding="async">
-              </button>
-              <button type="button" data-photo-src="assets/companyphoto/03.webp" data-photo-alt="團隊洗衣日合照" data-photo-caption="洗衣日留念" aria-label="顯示洗衣日留念">
-                <img src="assets/companyphoto/03.webp" alt="" loading="lazy" decoding="async">
-              </button>
-            </div>
-            <p class="photo-counter"><strong>01</strong> / <span>03</span></p>
-          </div>
+      <div class="map-pins" aria-label="可探索地點"></div>
+
+      <aside class="location-card">
+        <small>NOW EXPLORING</small>
+        <h2>辦公大廳</h2>
+        <p>水族箱映著晨光，新的企劃似乎正在悄悄發芽。</p>
+      </aside>
+
+      <section class="fragment-tray" aria-label="可收集拼圖碎片"></section>
+
+      <figure class="character-stand">
+        <img src="assets/character-mophy.png" alt="墨非">
+      </figure>
+
+      <section class="dialogue-panel" aria-label="角色對話">
+        <div>
+          <small>墨非 Mophy</small>
         </div>
+        <p>妳來了。今天想從哪裡開始探索？我陪妳。</p>
+        <button class="dialogue-next" type="button">繼續對話</button>
       </section>
 
-      <section class="panel explore-panel" aria-label="辦公室探索">
-        <header class="panel-head">
-          <h2>✦ 辦公室探索 <small>?</small></h2>
-          <span>探索進度 <strong>32%</strong> »</span>
-        </header>
-        <div class="office-map" data-room="hall">
-          <div class="office-stage">
-            <img class="office-scene office-scene-back" src="assets/office/hall.webp" alt="辦公室大廳探索區" decoding="async">
-            <img class="office-scene office-scene-front" src="assets/office/hall.webp" alt="" aria-hidden="true" decoding="async">
-            <span class="office-light" aria-hidden="true"></span>
-          </div>
-          <p class="room-status"><strong>辦公大廳</strong><small>SCENE 01 / 10</small></p>
-          <button class="hotspot meeting" type="button" data-room-target="motionroom">會議室<small>(新劇情)</small></button>
-          <button class="hotspot lounge" type="button" data-room-target="restroom">休息區<small>(可互動)</small></button>
-          <button class="hotspot desk" type="button" data-room-target="department">角色們的工位<small>(可互動)</small></button>
-          <button class="hotspot file" type="button" data-room-target="treasurehouse">資料區<small>(可收集)</small></button>
-          <span class="mini-map" aria-hidden="true"></span>
-          <div class="move-pad" aria-label="方向移動">
-            <button type="button" data-room-move="-1" aria-label="上一個場景">⌃</button>
-            <button type="button" data-room-move="-1" aria-label="上一個場景">‹</button>
-            <i></i>
-            <button type="button" data-room-move="1" aria-label="下一個場景">›</button>
-            <button type="button" data-room-move="1" aria-label="下一個場景">⌄</button>
-          </div>
-          <!-- <button class="start-explore" type="button"><span>🌿</span><strong>開始探索<br>辦公室</strong><small>ENTER</small></button> -->
+      <div class="bag-dock" aria-label="背包功能">
+        <div class="explore-tools" aria-label="探索功能">
+          <button class="map-square-button" type="button" data-bag="map">
+            <span><img src="assets/icons/map.webp" alt="" loading="lazy"></span>
+            <strong>探索地圖</strong>
+          </button>
+          <button class="clue-square-button" type="button" data-bag="clue">
+            <span><img src="assets/icons/puzzle.webp" alt="" loading="lazy"></span>
+            <strong>線索蒐集</strong>
+          </button>
         </div>
-      </section>
-
-    </div>
+      </div>
+    </section>
   </main>
-  <section class="photo-lightbox" role="dialog" aria-modal="true" aria-label="合照放大檢視" hidden>
-    <button class="photo-lightbox-close" type="button" aria-label="關閉合照">×</button>
+
+  <section class="bag-modal" data-modal="map" role="dialog" aria-modal="true" aria-label="探索地圖" hidden>
+    <div class="modal-card map-bag">
+      <header>
+        <div>
+          <small>AREA SELECT</small>
+          <h2>選擇探索位置</h2>
+        </div>
+        <button class="modal-close" type="button" aria-label="關閉探索地圖">×</button>
+      </header>
+      <div class="location-select-grid" aria-label="位置清單"></div>
+    </div>
+  </section>
+
+  <section class="bag-modal" data-modal="clue" role="dialog" aria-modal="true" aria-label="線索收集" hidden>
+    <div class="modal-card clue-bag">
+      <header>
+        <div>
+          <small>PHOTO PUZZLE</small>
+          <h2>線索收集</h2>
+        </div>
+        <button class="modal-close" type="button" aria-label="關閉線索收集">×</button>
+      </header>
+      <div class="clue-board">
+        <div class="clue-puzzle" aria-label="合照拼圖"></div>
+        <aside class="clue-note">
+          <strong>公司大合照</strong>
+          <p>在不同地點找到碎片，收集後會自動放回拼圖板。</p>
+          <span class="clue-progress">0 / 20</span>
+          <code class="clue-password" hidden>PHYMO-MOFEI-1214-LOVE</code>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="bag-modal" data-modal="video" role="dialog" aria-modal="true" aria-label="影片背包" hidden>
+    <div class="modal-card video-bag">
+      <div class="tablet-device is-locked" aria-label="平板影片播放器">
+        <div class="tablet-camera" aria-hidden="true"></div>
+        <section class="video-lock" aria-label="影片密碼鎖">
+          <button class="modal-close" type="button" aria-label="關閉影片背包">×</button>
+          <small>[LOCKED DEVICE]</small>
+          <h2>手機影片已加密</h2>
+          <p>完成線索收集後，輸入取得的長串密碼才能播放。</p>
+          <label>
+            <span>ACCESS PASSWORD</span>
+            <input class="video-password-input" type="password" autocomplete="off" placeholder="輸入線索密碼">
+          </label>
+          <button class="video-unlock-button" type="button">解除鎖定</button>
+          <em class="video-lock-message" aria-live="polite"></em>
+        </section>
+        <div class="bag-video-layout">
+          <section class="tablet-screen" aria-label="影片播放畫面">
+            <header>
+              <div>
+                <small>[通知]</small>
+                <h2>影片已下載完成</h2>
+              </div>
+              <button class="modal-close" type="button" aria-label="關閉影片背包">×</button>
+            </header>
+            <video class="bag-video-player" controls poster="assets/video_posters/video1.webp">
+              <source src="assets/video/video1.mp4" type="video/mp4">
+            </video>
+            <iframe class="bag-youtube-player"  src="https://www.youtube.com/embed/jsFQvMvirtU" title="Phymo #aivideo #aimusic  #朋友之間做好玩的" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </section>
+          <aside class="bag-video-list" aria-label="影片選單">
+            <small>VIDEO MENU</small>
+            <button class="is-active" type="button" data-video-type="local" data-video-src="assets/video/video1.mp4" data-video-poster="assets/video_posters/video1.webp" data-video-title="小破群開發日常">
+              <img src="assets/video_posters/video1.webp" alt="">
+              <span>小破群開發日常</span>
+            </button>
+            <button type="button" data-video-type="local" data-video-src="assets/video/Lacuna.mp4" data-video-poster="assets/video_posters/01.webp" data-video-title="Lacuna">
+              <img src="assets/video_posters/Lacuna.webp" alt="">
+              <span>Lacuna</span>
+            </button>
+            <button type="button" data-video-type="youtube" data-youtube-src="https://www.youtube.com/embed/vJlMSHuxUFg?rel=0&playsinline=1" data-video-title="Phymo">
+              <img src="assets/video_posters/phymp.webp" alt="">
+              <span>Phymo</span>
+            </button>
+          </aside>
+        </div>
+        <div class="tablet-home" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bag-modal" data-modal="photo" role="dialog" aria-modal="true" aria-label="照片背包" hidden>
+    <div class="modal-card photo-bag">
+      <header>
+        <div>
+          <small>PHOTO BAG</small>
+          <h2>佈告欄</h2>
+        </div>
+        <button class="modal-close" type="button" aria-label="關閉照片背包">×</button>
+      </header>
+      <div class="photo-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="photo-lightbox" role="dialog" aria-modal="true" aria-label="照片放大檢視" hidden>
+    <button class="lightbox-close" type="button" aria-label="關閉照片">×</button>
     <figure>
-      <img src="assets/companyphoto/01.webp" alt="水族館企劃合照">
+      <img src="assets/companyphoto/01.webp" alt="">
       <figcaption>深藍企劃日</figcaption>
     </figure>
   </section>
 
+  <audio class="bg-music" src="assets/music/Phymo.mp3" loop preload="auto"></audio>
+
   <script>
-    const featuredVideo = document.querySelector(".featured-video");
-    const featuredPlayer = document.querySelector(".featured-player");
-    const featuredTitle = document.querySelector(".featured-player figcaption strong");
-    const featuredSubtitle = document.querySelector(".featured-player figcaption em");
-    const clips = document.querySelectorAll(".clip");
-    const playButton = document.querySelector(".feature-play");
-    const restartButton = document.querySelector(".feature-restart");
-    const muteButton = document.querySelector(".feature-mute");
-    const fullscreenButton = document.querySelector(".feature-fullscreen");
-    const progress = document.querySelector(".featured-progress i");
-    const timeText = document.querySelector(".feature-time");
-    const photoWall = document.querySelector(".photo-wall");
-    const photoThumbs = [...document.querySelectorAll(".photo-thumbs button")];
-    const activePhoto = document.querySelector(".photo-featured img");
-    const activeCaption = document.querySelector(".photo-featured strong");
-    const photoCounter = document.querySelector(".photo-counter strong");
-    const photoOpenButton = document.querySelector(".photo-featured");
-    const photoLightbox = document.querySelector(".photo-lightbox");
-    const lightboxImage = document.querySelector(".photo-lightbox img");
-    const lightboxCaption = document.querySelector(".photo-lightbox figcaption");
-    let activePhotoIndex = 0;
-    let photoTimer;
-    const officeMap = document.querySelector(".office-map");
-    const officeStage = document.querySelector(".office-stage");
-    const officeScenes = document.querySelectorAll(".office-scene");
-    const roomName = document.querySelector(".room-status strong");
-    const roomCount = document.querySelector(".room-status small");
-    const roomControls = document.querySelectorAll("[data-room-target], [data-room-move]");
-    const officeRooms = [
-      { id: "hall", label: "辦公大廳" },
-      { id: "department", label: "開發部門" },
-      { id: "motionroom", label: "會議室" },
-      { id: "backendlead", label: "主管辦公室" },
-      { id: "bar", label: "茶水吧台" },
-      { id: "restroom", label: "休息區" },
-      { id: "machineroom", label: "機房" },
-      { id: "treasurehouse", label: "典藏室" },
-      { id: "boytoilet", label: "男洗手間" },
-      { id: "girltoilet", label: "女洗手間" }
+    const locations = [
+      {
+        id: "hall",
+        name: "辦公大廳",
+        desc: "水族箱映著晨光，新的企劃似乎正在悄悄發芽。",
+        image: "assets/office/hall.webp",
+        character: "assets/character/mophy-normal.png",
+        fragments: [0, 1, 2],
+        lines: [
+          "妳來了。今天想從哪裡開始探索？我陪妳。",
+          "這裡是大家每天擦肩而過的地方，所以也最容易藏著意外的線索。"
+        ]
+      },
+      {
+        id: "department",
+        name: "開發部門",
+        desc: "螢幕上的程式碼還亮著，有人剛剛離開座位。",
+        image: "assets/office/department.webp",
+        character: "assets/character/mophy-shy.png",
+        fragments: [3, 4, 5],
+        lines: [
+          "這裡有很多未完成的分支，也有很多不能說出口的心事。",
+          "如果妳看到奇怪的註解，不准笑。那可能是我昨晚留下的。"
+        ]
+      },
+      {
+        id: "motionroom",
+        name: "動態捕捉室",
+        desc: "白板上留下了幾個被圈起來的名字。",
+        image: "assets/office/motionroom.webp",
+        character: "assets/character/mophy-smile2.png",
+        fragments: [6, 7, 8],
+        lines: [
+          "會議室不只討論進度，也討論那些沒人敢承認的偏心。",
+          "坐近一點，我把下一段劇情只講給妳聽。"
+        ]
+      },
+      {
+        id: "restroom",
+        name: "休息區",
+        desc: "沙發和咖啡香讓時間慢了一拍。",
+        image: "assets/office/restroom.webp",
+        character: "assets/character/mophy-comfort2.png",
+        fragments: [9, 10],
+        lines: [
+          "累了就先在這裡休息。探索不是趕路，是一起停下來看見什麼。",
+          "如果妳願意，我可以把今天的第一杯咖啡讓給妳。"
+        ]
+      },
+      {
+        id: "treasurehouse",
+        name: "典藏室",
+        desc: "相簿、卡片和未公開素材都收在這裡。",
+        image: "assets/office/treasurehouse.webp",
+        character: "assets/character/mophy-smile.png",
+        fragments: [11, 12, 13],
+        lines: [
+          "這裡的每張素外都有一個版本號，也有一個不想被刪掉的瞬間。",
+          "妳想先看影片，還是照片？"
+        ]
+      },
+      {
+        id: "conferenceroom",
+        name: "會議室",
+        desc: "開會討論新點子專屬空間。",
+        image: "assets/office/conferenceroom.webp",
+        character: "assets/character/mophy-normal.png",
+        fragments: [14, 15],
+        lines: [
+         "投影幕的微光落在桌面上，像某個還沒被說出口的答案。",
+         "散落的筆記暫時留在原處，也許下一次翻開時，故事會多出新的頁數。",
+         "會議室安靜得只剩時鐘聲，彷彿連空氣都在等待下一個決定。"
+        ]
+      },
+       {
+        id: "aquarium",
+        name: "水族室",
+        desc: "這裡是人魚雙雙的專屬空間。",
+        image: "assets/office/treasurehouse.webp",
+        character: "assets/character/mophy-heartbeat.png",
+        fragments: [16,17 ],
+        lines: [
+          "水面有一點反光，像被誰小心藏起來的照片角落。",
+          "找到的碎片先收好，拼起來也許會看見另一段日常。"
+        ]
+      },
+      {
+        id: "bar",
+        name: "茶水吧台",
+        desc: "杯緣還留著溫度，像有人剛把話吞回去。",
+        image: "assets/office/bar.webp",
+        character: "assets/character/mophy-normal.png",
+        fragments: [18, 19],
+        lines: [
+          "我原本只是來倒水，結果想到妳可能會經過，就多留了一會兒。",
+          "這句話聽起來不像偶然？嗯，妳可以這麼理解。"
+        ]
+      },
+      {
+        id: "backendlead",
+        name: "首席專屬辦公室",
+        desc: "首席的",
+        image: "assets/office/backendlead.webp",
+        character: "assets/character/mophy-normal.png",
+        fragments: [18, 19],
+        lines: [
+          "系統穩定運行中，偶爾也會替某些未命名的想法保留埠口。",
+          "封包持續穿越無數節點，而答案或許就在下一次請求之後。",
+          "這裡存放著無數人的故事，只是有些紀錄，被設定成僅限特定權限查看。"
+        ]
+      },
+      {
+        id: "boytoilet",
+        name: "男廁所",
+        desc: "首席的",
+        image: "assets/office/boytoilet.webp",
+        character: "assets/character/mophy-shy.png",
+        fragments: [18, 19],
+        lines: [
+         "有人把領帶重新整理好，像把情緒也一起藏回平靜之下。",
+        "鏡面誠實映照每個表情，卻不會向任何人透露秘密。",
+        "短暫停留的片刻，也許比會議室裡更接近真心。"
+        ]
+      },
+      {
+        id: "girltoilet",
+        name: "女廁所",
+        desc: "首席禁止進入的秘密聖地",
+        image: "assets/office/girltoilet.webp",
+        character: "assets/character/mophy-shy.png",
+        fragments: [18, 19],
+        lines: [
+          "要補妝嗎？畢竟下一個轉角可能遇見重要的人。",
+          "燈光很溫柔，適合偷偷檢查今天的狀態。",
+          "裡面似乎有人，還是稍後再來吧。"
+        ]
+      },
+
     ];
-    let activeRoomIndex = 0;
-    let roomChangeTimer;
 
-    officeRooms.slice(1).forEach((room) => {
-      const preload = new Image();
-      preload.src = `assets/office/${room.id}.webp`;
-    });
+    const sceneImage = document.querySelector(".scene-image");
+    const sceneGlow = document.querySelector(".scene-glow");
+    const pins = document.querySelector(".map-pins");
+    const locationSelectGrid = document.querySelector(".location-select-grid");
+    const locationTitle = document.querySelector(".location-card h2");
+    const locationDesc = document.querySelector(".location-card p");
+    const fragmentTray = document.querySelector(".fragment-tray");
+    const cluePuzzle = document.querySelector(".clue-puzzle");
+    const clueProgress = document.querySelector(".clue-progress");
+    const cluePassword = document.querySelector(".clue-password");
+    const characterImage = document.querySelector(".character-stand img");
+    const dialogueText = document.querySelector(".dialogue-panel p");
+    const dialogueNext = document.querySelector(".dialogue-next");
+    const bagVideo = document.querySelector(".bag-video-player");
+    const bagYoutube = document.querySelector(".bag-youtube-player");
+    const bgMusic = document.querySelector(".bg-music");
+    const musicToggle = document.querySelector(".music-toggle");
+    const tabletDevice = document.querySelector(".tablet-device");
+    const videoPasswordInput = document.querySelector(".video-password-input");
+    const videoUnlockButton = document.querySelector(".video-unlock-button");
+    const videoLockMessage = document.querySelector(".video-lock-message");
+    const photoGrid = document.querySelector(".photo-grid");
+    const lightbox = document.querySelector(".photo-lightbox");
+    const fallbackPhotos = [
+      { title: "雙雙來公司的紀念照(ゝ∀･)⌒☆", src: "assets/companyphoto/01.webp" },
+      { title: "好事成雙水族箱完工✧*｡٩(ˊᗜˋ*)و✧*｡", src: "assets/companyphoto/02.webp" },
+      { title: "突發奇想的洗衣店紀念照", src: "assets/companyphoto/03.webp" },
+      { title: "員工旅遊出國啦~美女帥哥照", src: "assets/companyphoto/04.webp" },
+      { title: "員工旅遊出國啦~美女帥哥照", src: "assets/companyphoto/10.webp" },
+      { title: "員工旅遊出國啦~美女合拍", src: "assets/companyphoto/11.webp" },
+      { title: "員工旅遊出國啦~美女帥哥照", src: "assets/companyphoto/12.webp" },
+      { title: "一起去遊樂園出遊🎇", src: "assets/companyphoto/05.webp" },
+      { title: "遊樂園連拍2", src: "assets/companyphoto/07.webp" },
+      { title: "遊樂園連拍3", src: "assets/companyphoto/08.webp" },
+      { title: "公司連拍4", src: "assets/companyphoto/09.webp" },
+      { title: "刺激的過山車紀念照", src: "assets/companyphoto/14.webp" },
+      { title: "刺激的過山車紀念照", src: "assets/companyphoto/15.webp" },
+      { title: "公司合照 06", src: "assets/companyphoto/06.png" },
+      { title: "公司合照 13", src: "assets/companyphoto/13.webp" },
+      { title: "宵夜採購團🌔", src: "assets/companyphoto/16.webp" },
+      { title: "宵夜採購團🌔", src: "assets/companyphoto/17.webp" },
+      { title: "偷拍兩位男神(灬ºωº灬)", src: "assets/companyphoto/18.webp" },
+      { title: "被動物園煩死的首席男神(ﾟ3ﾟ)～♪", src: "assets/companyphoto/19.webp" },
+      { title: "雙雙賜福，天降財運 哈哈", src: "assets/companyphoto/20.webp" },
+      { title: "不知誰養的鵝", src: "assets/companyphoto/21.webp" },
+      { title: "小比乾亂咬證明get!", src: "assets/companyphoto/22.webp" },
+      { title: "公司大瓜♥(´∀` )黃森下一秒會被凌辰打", src: "assets/companyphoto/23.webp" },
+      { title: "幻悠貓貓又去找黃森男神了，嘖嘖", src: "assets/companyphoto/24.webp" },
+      { title: "抓到偷睡覺的祈予眠和貼便利貼的齊悟苜😄", src: "assets/companyphoto/25.webp" },
+      { title: "一群社恐I人的公司日常合照", src: "assets/companyphoto/26.webp" },
+      { title: "首席與小比乾", src: "assets/companyphoto/27.webp" },
+      { title: "公司野餐日", src: "assets/companyphoto/28.webp" },
+      { title: "公司野餐日", src: "assets/companyphoto/29.webp" },
+      { title: "公司電玩展", src: "assets/companyphoto/30.webp" },
+      { title: "黃森電玩展造型", src: "assets/companyphoto/31.webp" },
+      { title: "公司電玩展", src: "assets/companyphoto/32.webp" }
+    ];
+    let activeLocation = locations[0];
+    let dialogueIndex = 0;
+    const collectedFragments = new Set();
+    const fragmentPositions = new Map();
+    const puzzleTotal = 20;
+    const puzzleImage = "assets/companyphoto/04.webp";
+    const videoPassword = "PHYMO-HEART404";
+    let videoUnlocked = false;
+    let bgMusicEnabled = true;
 
-    function showPhoto(index) {
-      activePhotoIndex = (index + photoThumbs.length) % photoThumbs.length;
-      const selected = photoThumbs[activePhotoIndex];
-      activePhoto.src = selected.dataset.photoSrc;
-      activePhoto.alt = selected.dataset.photoAlt;
-      activeCaption.textContent = selected.dataset.photoCaption;
-      photoCounter.textContent = String(activePhotoIndex + 1).padStart(2, "0");
-      photoThumbs.forEach((thumb, thumbIndex) => {
-        thumb.classList.toggle("is-active", thumbIndex === activePhotoIndex);
-      });
-    }
-
-    function startPhotoCarousel() {
-      window.clearInterval(photoTimer);
-      photoTimer = window.setInterval(() => showPhoto(activePhotoIndex + 1), 5500);
-    }
-
-    photoThumbs.forEach((thumb, index) => {
-      thumb.addEventListener("click", () => {
-        showPhoto(index);
-        startPhotoCarousel();
-      });
-    });
-
-    document.querySelector(".photo-prev").addEventListener("click", () => {
-      showPhoto(activePhotoIndex - 1);
-      startPhotoCarousel();
-    });
-
-    document.querySelector(".photo-next").addEventListener("click", () => {
-      showPhoto(activePhotoIndex + 1);
-      startPhotoCarousel();
-    });
-
-    photoOpenButton.addEventListener("click", () => {
-      lightboxImage.src = activePhoto.src;
-      lightboxImage.alt = activePhoto.alt;
-      lightboxCaption.textContent = activeCaption.textContent;
-      photoLightbox.hidden = false;
-      window.clearInterval(photoTimer);
-    });
-
-    document.querySelector(".photo-lightbox-close").addEventListener("click", () => {
-      photoLightbox.hidden = true;
-      startPhotoCarousel();
-    });
-
-    photoLightbox.addEventListener("click", (event) => {
-      if (event.target === photoLightbox) {
-        photoLightbox.hidden = true;
-        startPhotoCarousel();
+    locations.forEach((location) => {
+      if (location.id !== "hall") {
+        const preload = new Image();
+        preload.src = location.image;
       }
     });
 
-    photoWall.addEventListener("pointerenter", () => window.clearInterval(photoTimer));
-    photoWall.addEventListener("pointerleave", startPhotoCarousel);
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !photoLightbox.hidden) {
-        photoLightbox.hidden = true;
-        startPhotoCarousel();
+    function renderLocationSelect() {
+      locationSelectGrid.replaceChildren();
+      locations.forEach((location) => {
+        const button = document.createElement("button");
+        const collectedCount = location.fragments.filter((fragment) => collectedFragments.has(fragment)).length;
+        button.className = "location-select-card";
+        button.type = "button";
+        button.dataset.location = location.id;
+        button.innerHTML = `
+          <img src="${location.image}" alt="">
+          <span>
+            <strong>${location.name}</strong>
+            <em>${collectedCount}/${location.fragments.length} 拼圖碎片</em>
+          </span>
+        `;
+        button.addEventListener("click", () => {
+          activateLocation(location.id);
+          document.querySelector('[data-modal="map"]').hidden = true;
+        });
+        locationSelectGrid.append(button);
+      });
+    }
+
+    function renderFragments() {
+      fragmentTray.replaceChildren();
+      activeLocation.fragments.forEach((fragment) => {
+        if (collectedFragments.has(fragment)) return;
+        const button = document.createElement("button");
+        const position = getFragmentPosition(activeLocation.id, fragment);
+        button.type = "button";
+        button.dataset.fragment = fragment;
+        button.style.left = `${position.x}%`;
+        button.style.top = `${position.y}%`;
+        button.innerHTML = `
+          <span><img src="assets/icons/piece.webp" alt=""></span>
+          <strong>拼圖碎片</strong>
+        `;
+        button.addEventListener("click", () => collectFragment(fragment, button));
+        fragmentTray.append(button);
+      });
+    }
+
+    function getFragmentPosition(locationId, fragment) {
+      const key = `${locationId}-${fragment}`;
+      if (!fragmentPositions.has(key)) {
+        fragmentPositions.set(key, createFragmentPosition());
       }
+      return fragmentPositions.get(key);
+    }
+
+    function createFragmentPosition() {
+      let position = { x: 50, y: 50 };
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        position = {
+          x: 10 + Math.random() * 80,
+          y: 18 + Math.random() * 58
+        };
+
+        const overlapsLocationCard = position.x < 35 && position.y < 45;
+        const overlapsTopButtons = position.x > 55 && position.y < 32;
+        if (!overlapsLocationCard && !overlapsTopButtons) return position;
+      }
+      return position;
+    }
+
+    function renderClues() {
+      cluePuzzle.replaceChildren();
+      for (let index = 0; index < puzzleTotal; index += 1) {
+        const piece = document.createElement("span");
+        const isCollected = collectedFragments.has(index);
+        piece.className = `clue-piece${isCollected ? " is-collected" : ""}`;
+        piece.style.setProperty("--piece-x", index % 6);
+        piece.style.setProperty("--piece-y", Math.floor(index / 6));
+        piece.style.backgroundImage = `url("${puzzleImage}")`;
+        piece.textContent = isCollected ? "" : String(index + 1).padStart(2, "0");
+        cluePuzzle.append(piece);
+      }
+      clueProgress.textContent = `${collectedFragments.size} / ${puzzleTotal}`;
+      const isComplete = collectedFragments.size >= puzzleTotal;
+      cluePassword.hidden = !isComplete;
+      if (isComplete) {
+        cluePassword.textContent = videoPassword;
+      }
+      renderLocationSelect();
+    }
+
+    function collectFragment(fragment, trigger) {
+      if (collectedFragments.has(fragment)) return;
+      trigger.disabled = true;
+      trigger.classList.add("is-picking");
+      window.setTimeout(() => {
+        finishCollectFragment(fragment);
+      }, 560);
+    }
+
+    function finishCollectFragment(fragment) {
+      collectedFragments.add(fragment);
+      dialogueText.textContent = `找到第 ${String(fragment + 1).padStart(2, "0")} 片拼圖了。先放進線索蒐集裡，等等一起拼成線索。`;
+      renderFragments();
+      renderClues();
+    }
+
+    function activateLocation(id) {
+      const location = locations.find((item) => item.id === id) || locations[0];
+      activeLocation = location;
+      dialogueIndex = 0;
+      sceneImage.classList.add("is-changing");
+      window.setTimeout(() => {
+        sceneImage.src = location.image;
+        sceneImage.alt = location.name;
+        sceneImage.classList.remove("is-changing");
+      }, 160);
+      locationTitle.textContent = location.name;
+      locationDesc.textContent = location.desc;
+      characterImage.src = location.character;
+      dialogueText.textContent = location.lines[0];
+      renderFragments();
+      renderLocationSelect();
+    }
+
+    dialogueNext.addEventListener("click", () => {
+      dialogueIndex = (dialogueIndex + 1) % activeLocation.lines.length;
+      dialogueText.textContent = activeLocation.lines[dialogueIndex];
     });
-    startPhotoCarousel();
 
-    function formatTime(seconds) {
-      if (!Number.isFinite(seconds)) return "00:00";
-      const minutes = Math.floor(seconds / 60);
-      const remaining = Math.floor(seconds % 60);
-      return `${String(minutes).padStart(2, "0")}:${String(remaining).padStart(2, "0")}`;
-    }
-
-    function updatePlaybackDisplay() {
-      const percent = featuredVideo.duration
-        ? (featuredVideo.currentTime / featuredVideo.duration) * 100
-        : 0;
-      progress.style.width = `${percent}%`;
-      timeText.textContent = `${formatTime(featuredVideo.currentTime)} / ${formatTime(featuredVideo.duration)}`;
-    }
-
-    function updateVideoOrientation() {
-      const isPortrait = featuredVideo.videoHeight > featuredVideo.videoWidth;
-      featuredPlayer.classList.toggle("is-portrait", isPortrait);
-      featuredPlayer.classList.toggle("is-landscape", !isPortrait);
-    }
-
-    clips.forEach((clip) => {
-      clip.addEventListener("click", () => {
-        clips.forEach((item) => item.classList.remove("is-active"));
-        clip.classList.add("is-active");
-        featuredVideo.pause();
-        featuredVideo.poster = clip.dataset.poster;
-        featuredVideo.src = clip.dataset.video;
-        featuredVideo.load();
-        featuredTitle.textContent = clip.dataset.title;
-        featuredSubtitle.textContent = clip.dataset.subtitle;
-        playButton.textContent = "▶";
-        updatePlaybackDisplay();
+    document.querySelectorAll(".bag-button, .map-square-button, .clue-square-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const modal = document.querySelector(`[data-modal="${button.dataset.bag}"]`);
+        if (modal) {
+          modal.hidden = false;
+          if (button.dataset.bag === "video" && !videoUnlocked) {
+            window.setTimeout(() => videoPasswordInput.focus(), 80);
+          }
+        }
       });
     });
 
-    playButton.addEventListener("click", () => {
-      if (featuredVideo.paused) {
-        featuredVideo.play();
+    document.querySelectorAll(".modal-close").forEach((button) => {
+      button.addEventListener("click", () => {
+        const modal = button.closest(".bag-modal");
+        modal.hidden = true;
+        stopBagMedia();
+      });
+    });
+
+    document.querySelectorAll(".bag-modal").forEach((modal) => {
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.hidden = true;
+          stopBagMedia();
+        }
+      });
+    });
+
+    function stopBagMedia() {
+      bagVideo.pause();
+      bagYoutube.src = "about:blank";
+      resumeBgMusic();
+    }
+
+    async function playBgMusic() {
+      if (!bgMusicEnabled) return;
+      try {
+        await bgMusic.play();
+        musicToggle.textContent = "音樂暫停";
+        musicToggle.setAttribute("aria-pressed", "true");
+      } catch (error) {
+        musicToggle.textContent = "音樂繼續";
+        musicToggle.setAttribute("aria-pressed", "false");
+      }
+    }
+
+    function pauseBgMusic() {
+      bgMusic.pause();
+      musicToggle.textContent = "音樂繼續";
+      musicToggle.setAttribute("aria-pressed", "false");
+    }
+
+    function resumeBgMusic() {
+      if (bgMusicEnabled) playBgMusic();
+    }
+
+    function toggleBgMusic() {
+      bgMusicEnabled = bgMusic.paused;
+      if (bgMusicEnabled) {
+        playBgMusic();
+      } else {
+        pauseBgMusic();
+      }
+    }
+
+    musicToggle.addEventListener("click", toggleBgMusic);
+    document.addEventListener("pointerdown", playBgMusic, { once: true });
+    document.addEventListener("keydown", playBgMusic, { once: true });
+
+    function unlockVideo() {
+      const value = videoPasswordInput.value.trim();
+      if (value !== videoPassword) {
+        videoLockMessage.textContent = "密碼錯誤，請回線索蒐集確認。";
+        videoPasswordInput.select();
         return;
       }
-      featuredVideo.pause();
-    });
-
-    restartButton.addEventListener("click", () => {
-      featuredVideo.currentTime = 0;
-      featuredVideo.play();
-    });
-
-    muteButton.addEventListener("click", () => {
-      featuredVideo.muted = !featuredVideo.muted;
-      muteButton.textContent = featuredVideo.muted ? "♩" : "♬";
-    });
-
-    fullscreenButton.addEventListener("click", () => {
-      featuredVideo.requestFullscreen?.();
-    });
-
-    featuredVideo.addEventListener("play", () => {
-      playButton.textContent = "Ⅱ";
-    });
-    featuredVideo.addEventListener("pause", () => {
-      playButton.textContent = "▶";
-    });
-    featuredVideo.addEventListener("loadedmetadata", () => {
-      updateVideoOrientation();
-      updatePlaybackDisplay();
-    });
-    featuredVideo.addEventListener("timeupdate", updatePlaybackDisplay);
-
-    function showOfficeRoom(index) {
-      activeRoomIndex = (index + officeRooms.length) % officeRooms.length;
-      const room = officeRooms[activeRoomIndex];
-      officeStage.classList.add("is-changing");
-      window.clearTimeout(roomChangeTimer);
-      roomChangeTimer = window.setTimeout(() => {
-        officeScenes.forEach((image, sceneIndex) => {
-          image.src = `assets/office/${room.id}.webp`;
-          if (sceneIndex === 0) image.alt = `${room.label}探索區`;
-        });
-        officeMap.dataset.room = room.id;
-        roomName.textContent = room.label;
-        roomCount.textContent = `SCENE ${String(activeRoomIndex + 1).padStart(2, "0")} / ${officeRooms.length}`;
-        officeStage.classList.remove("is-changing");
-      }, 170);
+      videoUnlocked = true;
+      tabletDevice.classList.remove("is-locked");
+      videoLockMessage.textContent = "";
     }
 
-    roomControls.forEach((button) => {
+    videoUnlockButton.addEventListener("click", unlockVideo);
+    videoPasswordInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") unlockVideo();
+    });
+
+    document.querySelectorAll(".bag-video-list button").forEach((button) => {
       button.addEventListener("click", () => {
-        if (button.dataset.roomTarget) {
-          const targetIndex = officeRooms.findIndex((room) => room.id === button.dataset.roomTarget);
-          if (targetIndex >= 0) showOfficeRoom(targetIndex);
+        document.querySelectorAll(".bag-video-list button").forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+        if (button.dataset.videoType === "youtube") {
+          bagVideo.pause();
+          pauseBgMusic();
+          bagVideo.hidden = true;
+          bagYoutube.hidden = false;
+          bagYoutube.src = button.dataset.youtubeSrc;
           return;
         }
-        showOfficeRoom(activeRoomIndex + Number(button.dataset.roomMove));
+        bagYoutube.src = "about:blank";
+        bagYoutube.hidden = true;
+        bagVideo.hidden = false;
+        pauseBgMusic();
+        bagVideo.poster = button.dataset.videoPoster;
+        bagVideo.src = button.dataset.videoSrc;
+        bagVideo.load();
       });
     });
 
-    officeMap.addEventListener("pointermove", (event) => {
-      const bounds = officeMap.getBoundingClientRect();
+    bagVideo.addEventListener("play", pauseBgMusic);
+
+    function renderPhotos(photos) {
+      photoGrid.replaceChildren();
+      photos.forEach((photo) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.photoSrc = photo.src;
+        button.dataset.photoCaption = photo.title;
+        button.innerHTML = `
+          <img src="${photo.src}" alt="${photo.title}" loading="lazy">
+          <span>${photo.title}</span>
+        `;
+        photoGrid.append(button);
+      });
+    }
+
+    async function loadPhotos() {
+      try {
+        const response = await fetch("assets/companyphoto.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("photo json unavailable");
+        const photos = await response.json();
+        renderPhotos(photos);
+      } catch (error) {
+        renderPhotos(fallbackPhotos);
+      }
+    }
+
+    photoGrid.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const image = lightbox.querySelector("img");
+      image.src = button.dataset.photoSrc;
+      image.alt = button.dataset.photoCaption;
+      lightbox.querySelector("figcaption").textContent = button.dataset.photoCaption;
+      lightbox.hidden = false;
+    });
+
+    document.querySelector(".lightbox-close").addEventListener("click", () => {
+      lightbox.hidden = true;
+    });
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) lightbox.hidden = true;
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      document.querySelectorAll(".bag-modal").forEach((modal) => modal.hidden = true);
+      lightbox.hidden = true;
+      stopBagMedia();
+    });
+
+    document.querySelector(".map-stage").addEventListener("pointermove", (event) => {
+      const bounds = event.currentTarget.getBoundingClientRect();
       const x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
       const y = ((event.clientY - bounds.top) / bounds.height) * 2 - 1;
-      officeMap.style.setProperty("--look-x", x.toFixed(3));
-      officeMap.style.setProperty("--look-y", y.toFixed(3));
+      event.currentTarget.style.setProperty("--look-x", x.toFixed(3));
+      event.currentTarget.style.setProperty("--look-y", y.toFixed(3));
     });
 
-    officeMap.addEventListener("pointerleave", () => {
-      officeMap.style.setProperty("--look-x", "0");
-      officeMap.style.setProperty("--look-y", "0");
+    document.querySelector(".map-stage").addEventListener("pointerleave", (event) => {
+      event.currentTarget.style.setProperty("--look-x", "0");
+      event.currentTarget.style.setProperty("--look-y", "0");
     });
 
+    activateLocation("hall");
+    renderClues();
+    loadPhotos();
   </script>
 </body>
 </html>
