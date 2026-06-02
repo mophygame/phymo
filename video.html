@@ -136,7 +136,7 @@
             <video class="bag-video-player" controls poster="assets/video_posters/video1.webp">
               <source src="assets/video/video1.mp4" type="video/mp4">
             </video>
-            <iframe class="bag-youtube-player"  src="https://www.youtube.com/embed/oQpA-3m9Q7o" title="Lacuna" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe class="bag-youtube-player" title="YouTube 影片播放器" src="about:blank" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
           </section>
           <aside class="bag-video-list" aria-label="影片選單">
             <small>VIDEO MENU</small>
@@ -148,7 +148,7 @@
               <img src="assets/video_posters/Lacuna.webp" alt="">
               <span>Lacuna</span>
             </button>
-            <button type="button" data-video-type="youtube" data-youtube-src="https://www.youtube.com/embed/vJlMSHuxUFg?rel=0&playsinline=1" data-video-title="Phymo">
+            <button type="button" data-video-type="youtube" data-youtube-src="https://www.youtube.com/embed/jsFQvMvirtU?rel=0&playsinline=1" data-video-title="Phymo">
               <img src="assets/video_posters/phymo.webp" alt="">
               <span>Phymo</span>
             </button>
@@ -690,6 +690,8 @@
     function stopBagMedia() {
       bagVideo.pause();
       bagYoutube.src = "about:blank";
+      bagYoutube.hidden = true;
+      bagVideo.hidden = false;
       resumeBgMusic();
     }
 

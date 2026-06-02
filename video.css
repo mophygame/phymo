@@ -1039,7 +1039,7 @@ body {
 
 .bag-video-player[hidden],
 .bag-youtube-player[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .bag-video-list {
